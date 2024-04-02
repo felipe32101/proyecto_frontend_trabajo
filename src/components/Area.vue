@@ -4,7 +4,7 @@
       <h1 style="text-align: center; margin-top: 50px">Area</h1>
       <hr />
       <br />
-    </div>
+    </div> 
     <!-- Modal -->
     <q-dialog v-model="fixed">
       <q-card class="modal-content">
