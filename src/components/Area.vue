@@ -1,4 +1,4 @@
-<template>
+<template> 
   <div>
     <div>
       <h1 style="text-align: center; margin-top: 50px">Area</h1>
