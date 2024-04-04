@@ -159,7 +159,7 @@ const columns = [
   },
   {
     name: "idInstructorEncargado",
-    label: "Nombre",
+    label: "Encargado",
     field: (val)=> val.idInstructorEncargado.nombre,
     sortable: true,
     align: "left",
