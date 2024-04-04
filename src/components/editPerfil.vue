@@ -25,6 +25,10 @@
             <label for="" style="font-size: 20px;">Correo:</label>
             <label style="font-size: 20px; padding-left: 10px;" for=""> {{ correoUser }}</label> 
             <br>
+
+            <label for="" style="font-size: 20px;">Telefono:</label>
+            <label style="font-size: 20px; padding-left: 10px;" for=""> {{ telefonoUser }}</label> 
+            <br>
           </div>
         </div>
         <div class="bot">
@@ -155,6 +159,7 @@ const username = useUsuario.usuario.usuario
 const nombreUser = useUsuario.usuario.nombre
 const cedulaUser = useUsuario.usuario.cedula
 const correoUser = useUsuario.usuario.correo
+const telefonoUser = useUsuario.usuario.telefono
 
 
   </script>
