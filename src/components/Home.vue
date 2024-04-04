@@ -120,10 +120,10 @@ onMounted(async () => {
 .q-page-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
 }
 
-.drawer-content[data-v-08e32229] {
+.drawer-content {
   display: flex;
   flex-direction: column;
   align-items: center;
