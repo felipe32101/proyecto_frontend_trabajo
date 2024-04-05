@@ -29,6 +29,7 @@
               </router-link>
               </button>
               <button type="submit" class="submit">Recuperar</button>
+              
           </div>
         </div>
       </form>
