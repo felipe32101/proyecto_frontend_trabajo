@@ -1,34 +1,46 @@
-
 <template>
   <div class="body" v-if="!activar">
-        <div class="container">
-            <h2>Recuperar contraseña</h2>
-            <p class="texto1">Por favor, introduce la dirección de correo electrónico asociada a tu
-                cuenta de Gmail. Te enviaremos un enlace seguro para restablecer tu
-                contraseña.</p>
-            <q-form @submit="enviarCorreo">
-                <div class="contenedor1">
-                    <h1 style="font-size: 20px; height: 50px;">Ingrese su correo electrónico</h1>
-                    <div class="contenedor_input">
-                        <input type="email" class="input1" placeholder="Correo electrónico" v-model="correo"
-                            required />
-                    </div>
-                    <div class="contenedor2">
-                     <button  style="height: 40px; width:150px;" type="submit"
-                            >Enviar correo</button>
-                        <router-link to="/"><button class="volver">Volver</button></router-link>
-                    </div>
-                </div>
-            </q-form>
+    <div class="container">
+      <form class="form" @submit.prevent="registrarUsuario">
+        <div class="center-img">
+          <img :src="images" class="fondo" />
         </div>
+        <p class="title">Recuperar</p>
+        <p class="message">¡Recupera tu clave ahora mismo!</p>
+        <q-form @submit="enviarCorreo">
+          <div class="flex">
+            <label>
+              <input
+                type="text"
+                class="input"
+                placeholder=""
+                v-model="correo"
+                required
+              />
+              <span>Correo electrónico</span>
+            </label>
+          </div>
+          <div class="bot">
+            <button class="button2">
+              <router-link to="/">
+                <span class="lable">Cancelar</span>
+              </router-link>
+            </button>
+            <button type="submit" class="submit">Recuperar</button>
+          </div>
+          <br />
+        </q-form>
+      </form>
     </div>
-  </template>
+  </div>
+</template>
 <script setup>
- import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
 import { useUsuarioStore } from "../stores/usuario.js";
 // import Codigo from './CodigoRecuperar.vue';
-import { Cookies } from 'quasar';
+import { Cookies } from "quasar";
+import images from "../assets/fondo12.png";
 
 
 // const correo = ref('');
@@ -39,19 +51,19 @@ const correo = ref();
 
 // const activar = ref(false)
 
-const router = useRouter()
-async function enviarCorreo(){
-    try {
-        const r = await useUsuario.sendemail(correo.value)
-        console.log(r);
+const router = useRouter();
+async function enviarCorreo() {
+  try {
+    const r = await useUsuario.sendemail(correo.value);
+    console.log(r);
 
-        if(r.status===200) {
-           router.push('/correo')
-        }
-        Cookies.set('correo', correo.value, {expires: 1})
-    } catch (error) {
-        console.log(error);
+    if (r.status === 200) {
+      router.push("/correo");
     }
+    Cookies.set("correo", correo.value, { expires: 1 });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // const correoValido = computed(() => {
@@ -64,12 +76,11 @@ async function enviarCorreo(){
 </script>
 
 <style scoped>
-
 .container {
   display: flex;
   height: 100vh;
   width: 100vw;
-  background-color: #209616;
+  background-color: #2e7d32;
   align-items: center;
   justify-content: center;
 }
@@ -97,7 +108,7 @@ async function enviarCorreo(){
 
 .title {
   font-size: 28px;
-  color: #209616;
+  color: #2e7d32;
   font-weight: 600;
   letter-spacing: -1px;
   position: relative;
@@ -114,7 +125,7 @@ async function enviarCorreo(){
   width: 16px;
   border-radius: 50%;
   left: 0;
-  background-color: #209616;
+  background-color: #2e7d32;
 }
 
 .title::before {
@@ -149,25 +160,26 @@ async function enviarCorreo(){
   text-decoration: underline royalblue;
 }
 
-.flex{
-    display: flex;
-    width: 100%;
-    gap: 10px;
-    align-items: center;
-    justify-content: center;
+.flex {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 }
 
 .form label {
   position: relative;
 }
 
-.form label .input{
-    width: 200px;
-    height: 50px;
-    padding: 10px 10px 20px 10px;
-    outline: 0;
-    border: 1px solid rgba(105, 105, 105, 0.397);
-    border-radius: 10px;
+.form label .input {
+  width: 250px;
+  height: 50px;
+  padding: 10px 10px 20px 10px;
+  outline: 0;
+  border: 1px solid rgba(105, 105, 105, 0.397);
+  border-radius: 10px;
+  margin-bottom: 25px;
 }
 
 .form label .input + span {
@@ -183,7 +195,7 @@ async function enviarCorreo(){
   font-weight: 600;
 }
 
-select{
+select {
   color: grey;
   font-size: 0.9em;
   cursor: text;
@@ -208,9 +220,10 @@ select{
 }
 
 .submit {
+  width: 110px;
   border: none;
   outline: none;
-  background-color: #209616;
+  background-color: #2e7d32;
   padding: 10px;
   border-radius: 10px;
   color: #fff;
@@ -271,18 +284,18 @@ label .select:valid + span {
 .button2 {
   border: none;
   outline: none;
-  background-color: #209616;
+  background-color: #2e7d32;
   padding: 10px;
   border-radius: 10px;
   color: fff;
   font-size: 16px;
-  
+  width: 110px;
 }
 
 .lable {
   color: #fff;
 }
-a{
+a {
   text-decoration: none;
 }
 .button2:hover {
@@ -290,7 +303,9 @@ a{
 }
 
 .bot {
-    display: flex;
-    gap: 25px;
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  margin: 0
 }
 </style>
