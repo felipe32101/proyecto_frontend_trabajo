@@ -13,7 +13,15 @@ export const useUsuarioStore = defineStore('usuario', () => {
       throw error;
     }
   };
-
+const recuperarcontraseña= async () => {
+  try {
+    let responsecontraseña= await axios.get('usuario/contraseña')
+    return responsecontraseña
+  } catch (error) {
+    console.log("Error", error)
+    
+  }
+}
   const postusuario = async (data) => {
     try {
       let res = await axios.post('usuario/agregar', data);
@@ -22,10 +30,47 @@ export const useUsuarioStore = defineStore('usuario', () => {
       throw error;
     }
   };
+  
+  // const verificarCodigo = async (codigo) => {
+  //   try {
+  //     let response = await axios.post(usuario/confirmarcodigo/${codigo});
+  //     console.log("Hola soy enviar codigo", response)
+  //     return response;
+  //   } catch (error) {
+  //     console.log("Nokas pelotas v2", error);
+  //   }
+  // }
+
+  const sendemail = async (correo) => {
+    try {
+      const response = await axios.get(
+        `usuario/recuperar-codigo/${correo}`
+      );
+      console.log(response);
+
+      return response;
+    } catch (error) {
+      console.log(error);
+      }
+  };
+
+//   const newpassword = async (data) => {
+//     try {
+//         let res = await axios.put("usuario/nuevaPassword", data);
+//         console.log("Felicidades mi loko lo lograste", res)
+//         return res
+//     } catch (error) {
+//       console.log("Nokas pelotas v3", error);
+//         throw error;
+//     }
+// };
 
   const putusuarioInactivar = async (id) => {
     try {
-        let r= await axios.put(`usuario/inactivar/${id}`)
+      console.log(id, 'El usuario');
+
+        let r= await axios.put(`usuario/inactivar/${id}`);
+        console.log(r, 'El usuario');
         return r
     } catch (error) {
         console.log(error, 'Error al cambiar el estado de el usuario');
@@ -60,7 +105,7 @@ export const useUsuarioStore = defineStore('usuario', () => {
   }
   return {
     usuarios, usuario, token,
-    obtenerusuario, postusuario, login,putusuarioActivar, putusuarioInactivar, 
+    obtenerusuario, postusuario, login,putusuarioActivar, putusuarioInactivar, sendemail, recuperarcontraseña,
   }
 }, {
   persist: true,

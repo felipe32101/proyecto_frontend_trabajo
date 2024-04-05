@@ -1,38 +1,67 @@
+
 <template>
-    <div class="container">
-      <form class="form" @submit.prevent="registrarUsuario">
-        <div class="center-img">
-          <img :src="images" class="fondo" />
+  <div class="body" v-if="!activar">
+        <div class="container">
+            <h2>Recuperar contraseña</h2>
+            <p class="texto1">Por favor, introduce la dirección de correo electrónico asociada a tu
+                cuenta de Gmail. Te enviaremos un enlace seguro para restablecer tu
+                contraseña.</p>
+            <q-form @submit="enviarCorreo">
+                <div class="contenedor1">
+                    <h1 style="font-size: 20px; height: 50px;">Ingrese su correo electrónico</h1>
+                    <div class="contenedor_input">
+                        <input type="email" class="input1" placeholder="Correo electrónico" v-model="correo"
+                            required />
+                    </div>
+                    <div class="contenedor2">
+                     <button  style="height: 40px; width:150px;" type="submit"
+                            >Enviar correo</button>
+                        <router-link to="/"><button class="volver">Volver</button></router-link>
+                    </div>
+                </div>
+            </q-form>
         </div>
-        <p class="title">Recuperar</p>
-        <p class="message">
-          ¡Recupera tu clave ahora mismo!
-        </p>
-  
-        <div class="flex">
-          <label>
-            <input v-model="nombre" required placeholder="" type="text" class="input" />
-            <span>Usuario</span>
-          </label>  
-        </div>
-        <div class="bot">
-      <button class="button2">
-        <router-link to="/">
-          <span class="lable">Cancelar</span>
-            </router-link>
-      </button>
-        <button type="submit" class="submit">Recuperar</button>
-        </div><br>
-      </form>
     </div>
   </template>
-
-
-
 <script setup>
-import images from "../assets/fondo12.png";
-</script>
+ import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
+import { useUsuarioStore } from "../stores/usuario.js";
+// import Codigo from './CodigoRecuperar.vue';
+import { Cookies } from 'quasar';
 
+
+// const correo = ref('');
+// const codigoVerificacion = ref('');
+
+const useUsuario = useUsuarioStore();
+const correo = ref();
+
+// const activar = ref(false)
+
+const router = useRouter()
+async function enviarCorreo(){
+    try {
+        const r = await useUsuario.sendemail(correo.value)
+        console.log(r);
+
+        if(r.status===200) {
+           router.push('/correo')
+        }
+        Cookies.set('correo', correo.value, {expires: 1})
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// const correoValido = computed(() => {
+//     return !!correo.value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.value);
+// });
+
+// const codigoValido = computed(() => {
+//     return !!codigoVerificacion.value;
+// });
+</script>
 
 <style scoped>
 
