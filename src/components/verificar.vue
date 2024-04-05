@@ -1,81 +1,100 @@
 <template>
-  <div class="body" v-if="!activar">
+  <div class="body">
     <div class="container">
-      <form class="form" @submit.prevent="registrarUsuario">
+      <form @submit.prevent="verificarCodigo" class="form">
         <div class="center-img">
           <img :src="images" class="fondo" />
         </div>
-        <p class="title">Recuperar</p>
-        <p class="message">¡Recupera tu clave ahora mismo!</p>
-        <q-form @submit="enviarCorreo">
+        <p class="title">Codigo de verificacion</p>
+        <label for="email" class="text">Por favor, digite el código de verificación enviado a {{ useUsuario.email }}</label>
+        <div class="q-form">
           <div class="flex">
             <label>
               <input
                 type="text"
                 class="input"
                 placeholder=""
-                v-model="correo"
+                v-model="codigoVerificacion"
                 required
               />
-              <span>Correo electrónico</span>
+              <span>Código de verificación</span>
             </label>
           </div>
           <div class="bot">
-            <button class="button2">
+              <button
+                class="button2"
+              >
               <router-link to="/">
                 <span class="lable">Cancelar</span>
               </router-link>
-            </button>
-            <button type="submit" class="submit">Recuperar</button>
+              </button>
+              <button type="submit" class="submit">Recuperar</button>
           </div>
-          <br />
-        </q-form>
+        </div>
       </form>
     </div>
   </div>
 </template>
+
 <script setup>
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useUsuarioStore } from "../stores/usuario.js";
-// import Codigo from './CodigoRecuperar.vue';
 import { Cookies } from "quasar";
 import images from "../assets/fondo12.png";
 
-
-// const correo = ref('');
-// const codigoVerificacion = ref('');
-
+const correoElectronico = ref("");
+const codigoVerificacion = ref("");
 const useUsuario = useUsuarioStore();
-const correo = ref();
-
-// const activar = ref(false)
-
 const router = useRouter();
-async function enviarCorreo() {
-  try {
-    const r = await useUsuario.sendemail(correo.value);
-    console.log(r);
 
-    if (r.status === 200) {
-      router.push("/verificar");
+const correoValido = computed(() => {
+  return (
+    !!correoElectronico.value &&
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoElectronico.value)
+  );
+});
+
+const codigoValido = computed(() => {
+  return !!codigoVerificacion.value;
+});
+
+async function verificarCodigo() {
+  try {
+    // Hacer una solicitud al servidor para verificar el código
+    const response = await useUsuario.verificarCodigo(codigoVerificacion.value);
+
+    if (response.status === 200) {
+      Cookies.set("codigo", codigoVerificacion.value, { expires: 1 });
+      router.push("/NuevaContrasena");
+    } else {
+      // Manejar el caso en el que el código no es válido
+      console.log("Código no válido");
     }
-    Cookies.set("correo", correo.value, { expires: 1 });
   } catch (error) {
     console.log(error);
   }
 }
 
-// const correoValido = computed(() => {
-//     return !!correo.value && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo.value);
-// });
+async function enviarCorreo() {
+  try {
+    const response = await useUsuario.sendemail({
+      Correo: correoElectronico.value,
+    });
 
-// const codigoValido = computed(() => {
-//     return !!codigoVerificacion.value;
-// });
+    if (response.status === 200) {
+      Cookies.set("correo", correoElectronico.value, { expires: 1 });
+      activar.value = true;
+      router.push("/codigo-recuperacion");
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loadVerificar.value = false;
+  }
+}
 </script>
-
-<style scoped>
+<style>
 .container {
   display: flex;
   height: 100vh;
@@ -306,6 +325,6 @@ a {
   display: flex;
   gap: 25px;
   justify-content: center;
-  margin: 0
+  margin-bottom: 21px;
 }
 </style>

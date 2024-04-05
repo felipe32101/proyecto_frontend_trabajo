@@ -13,7 +13,7 @@ import itemPresupuesto from "../components/itemPresupuesto.vue";
 import Inicio from "../components/inicio.vue";
 import distriPresupuesto from "../components/distriPresupuesto.vue";
 import distriLoteFicha from "../components/distriLoteFicha.vue";
-import correo from "../components/correo.vue";
+import verificar from "../components/verificar.vue";
 import editPerfil from "../components/editPerfil.vue";
 import { useUsuarioStore } from "../stores/usuario.js";
 import { createRouter, createWebHashHistory } from "vue-router";
@@ -43,7 +43,7 @@ const checkAuth = () => {
 const routes = [
   { path: "/",component: Login,},
   {path: "/Recuperar", component: Recuperar},
-  {path: "/correo", component: correo},
+  {path: "/verificar", component: verificar},
   { path: "/Home",component: Home,
     children: [
       {path: "/Inicio", component: Inicio, beforeEnter:auth, meta: {rol: ["administrador", "bodega", "instructor", "superAdmin" ]} },

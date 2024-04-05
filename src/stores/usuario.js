@@ -40,14 +40,14 @@ const recuperarcontraseña= async () => {
   //     console.log("Nokas pelotas v2", error);
   //   }
   // }
-
+  const email = ref ("")
   const sendemail = async (correo) => {
     try {
       const response = await axios.get(
         `usuario/recuperar-codigo/${correo}`
       );
       console.log(response);
-
+      email.value = correo
       return response;
     } catch (error) {
       console.log(error);
@@ -104,7 +104,7 @@ const recuperarcontraseña= async () => {
     }
   }
   return {
-    usuarios, usuario, token,
+    usuarios, usuario, token, email,
     obtenerusuario, postusuario, login,putusuarioActivar, putusuarioInactivar, sendemail, recuperarcontraseña,
   }
 }, {
