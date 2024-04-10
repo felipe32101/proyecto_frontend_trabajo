@@ -15,6 +15,7 @@ import distriPresupuesto from "../components/distriPresupuesto.vue";
 import distriLoteFicha from "../components/distriLoteFicha.vue";
 import verificar from "../components/verificar.vue";
 import editPerfil from "../components/editPerfil.vue";
+import cambioContra from "../components/cambioContra.vue";
 import { useUsuarioStore } from "../stores/usuario.js";
 import { createRouter, createWebHashHistory } from "vue-router";
 const auth = (to, from, next) => {
@@ -44,6 +45,7 @@ const routes = [
   { path: "/",component: Login,},
   {path: "/Recuperar", component: Recuperar},
   {path: "/verificar", component: verificar},
+  {path: "/cambioContra", component: cambioContra},
   { path: "/Home",component: Home,
     children: [
       {path: "/Inicio", component: Inicio, beforeEnter:auth, meta: {rol: ["administrador", "bodega", "instructor", "superAdmin" ]} },
