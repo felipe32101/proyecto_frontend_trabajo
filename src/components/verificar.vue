@@ -43,55 +43,45 @@ import { useRouter } from "vue-router";
 import { useUsuarioStore } from "../stores/usuario.js";
 import { Cookies } from "quasar";
 import images from "../assets/fondo12.png";
-
-const correoElectronico = ref("");
-const codigoVerificacion = ref("");
-const useUsuario = useUsuarioStore();
-const router = useRouter();
-
-const correoValido = computed(() => {
-  return (
-    !!correoElectronico.value &&
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoElectronico.value)
-  );
-});
-
-const codigoValido = computed(() => {
-  return !!codigoVerificacion.value;
-});
-
-async function verificarCodigo() {
-  try {
-    // Hacer una solicitud al servidor para verificar el código
-    const response = await useUsuario.verificarCodigo(codigoVerificacion.value);
-
-    if (response.status === 200) {
-      Cookies.set("codigo", codigoVerificacion.value, { expires: 1 });
-      router.push("/NuevaContrasena");
-    } else {
-      // Manejar el caso en el que el código no es válido
-      console.log("Código no válido");
+const correoElectronico = ref('');
+  const codigoVerificacion = ref('');
+  const useUsuario = useUsuarioStore();
+  const router = useRouter();
+  
+  
+  const codigoValido = computed(() => {
+    return !!codigoVerificacion.value;
+  });
+  
+  async function verificarCodigo() {
+    try {
+      // Hacer una solicitud al servidor para verificar el código
+      const response = await useUsuario.confirmarCodigo(codigoVerificacion.value);
+  
+      if (response.status === 200) {
+        Cookies.set('codigo', codigoVerificacion.value, {expires: 1})
+        router.push('/cambioContra');
+      } else {
+        // Manejar el caso en el que el código no es válido
+        console.log('Código no válido');
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
-}
+
 
 async function enviarCorreo() {
   try {
-    const response = await useUsuario.sendemail({
-      Correo: correoElectronico.value,
-    });
+    const response = await useUsuario.sendemail({ Correo: correoElectronico.value });
 
     if (response.status === 200) {
-      Cookies.set("correo", correoElectronico.value, { expires: 1 });
+      Cookies.set('correo', correoElectronico.value, { expires: 1 });
       activar.value = true;
-      router.push("/codigo-recuperacion");
+      router.push('/codigo-recuperacion');
     }
   } catch (error) {
     console.log(error);
-  } finally {
-    loadVerificar.value = false;
   }
 }
 </script>

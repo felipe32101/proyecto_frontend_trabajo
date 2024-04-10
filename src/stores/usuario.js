@@ -53,6 +53,31 @@ const recuperarcontraseña= async () => {
       console.log(error);
       }
   };
+  const confirmarCodigo = async (codigo) => {
+    try {
+      const response = await axios.get(
+        `usuario/confirmar-codigo/${codigo}`
+      );
+      console.log(response);
+
+      return response;
+    } catch (error) {
+      console.log(error);
+      if (error.message === "Network Error") {
+        notificar("negative", "Sin conexión, por favor intente recargar");
+        return null;
+      }
+      if (
+        error.response.data.error === "No hay token en la peticion" ||
+        error.response.data.error === "Token no válido" ||
+        error.response.data.error.name === "TokenExpiredError"
+      ) {
+        salir();
+        return null;
+      }
+      return error.response.data;
+    }
+  };
 
 //   const newpassword = async (data) => {
 //     try {
@@ -105,7 +130,7 @@ const recuperarcontraseña= async () => {
   }
   return {
     usuarios, usuario, token, email,
-    obtenerusuario, postusuario, login,putusuarioActivar, putusuarioInactivar, sendemail, recuperarcontraseña,
+    obtenerusuario, postusuario, login,putusuarioActivar, putusuarioInactivar, sendemail, recuperarcontraseña,confirmarCodigo,
   }
 }, {
   persist: true,
