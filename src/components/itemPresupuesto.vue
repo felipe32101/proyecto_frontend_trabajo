@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h1 style="text-align: center; margin-top: 50px;">Presupuesto</h1>
+      <h1 style="text-align: center; margin-top: 50px;">Contrato</h1>
       <hr />
     </div>
     <!-- Modal -->
@@ -17,6 +17,7 @@
             <q-card-section style="max-height: 50vh" class="scroll">
               <q-input v-model="nombre" label="Nombre" type="text" style="width: 300px" />
               <q-input v-model="presupuesto" label="Presupuesto" type="number" style="width: 300px" />
+              <q-input v-model="presupuestoDisponible" label="Presupuesto Disponible" type="number" style="width: 300px" />
               <q-input v-model="año" label="Año" type="date" style="width: 300px" :min="getTodayDate()" />
             </q-card-section>
           </div>

@@ -7,7 +7,7 @@ export const useItemStore = defineStore('items', () => {
   
     const obtenerInfoitem = async () => {
         try {
-            let responseItem = await axios.get('items/itemns');
+            let responseItem = await axios.get('contrato/itemns');
             console.log(responseItem);
             items.value = responseItem.data.item;
         } catch (error) {
@@ -18,7 +18,7 @@ export const useItemStore = defineStore('items', () => {
     const postItem = async (data) => {
         try {
             console.log('d', data);
-            let res = await axios.post('items/agregar', data);
+            let res = await axios.post('contrato/agregar', data);
             return res
         } catch (error) {
             throw error
@@ -28,7 +28,7 @@ export const useItemStore = defineStore('items', () => {
     const putEditarItem = async (id, data) => {
         try {
             console.log(id , data );
-            let res = await axios.put(`items/itemns/${id}`, data);
+            let res = await axios.put(`contrato/itemns/${id}`, data);
             return res
         } catch (error) {
             throw error;
@@ -37,7 +37,7 @@ export const useItemStore = defineStore('items', () => {
 
     const putInactivarItem = async (id) => {
         try {
-            let r = await axios.put(`items/inactivar/${id}`)
+            let r = await axios.put(`contrato/inactivar/${id}`)
             return r
         } catch (error) {
             console.log(error, 'Error al cambiar el estado del item');
@@ -45,7 +45,7 @@ export const useItemStore = defineStore('items', () => {
     }
     const putActivarItem = async (id) => {
         try {
-            let r = await axios.put(`items/activar/${id}`)
+            let r = await axios.put(`contrato/activar/${id}`)
             return r
         } catch (error) {
             console.log(error, 'Error al cambiar el estado del item');

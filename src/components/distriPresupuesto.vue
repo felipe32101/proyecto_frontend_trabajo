@@ -8,36 +8,16 @@
     <q-dialog v-model="fixed">
       <q-card class="modal-content">
         <div class="contorno">
-          <q-card-section
-            class="row items-center q-pb-none"
-            style="color: black"
-          >
+          <q-card-section class="row items-center q-pb-none" style="color: black">
             <div class="text-h6">{{ text }}</div>
             <q-space />
           </q-card-section>
           <q-separator />
           <div v-if="mostrarData">
             <q-card-section style="max-height: 50vh" class="scroll">
-              <q-input
-                v-model="presupuesto"
-                label="Presupuesto"
-                type="number"
-                style="width: 300px"
-              />
-              <q-input
-                v-model="id_lote"
-                options="optionslote"
-                label="Id Lote"
-                type="string"
-                style="width: 300px"
-              />
-              <q-input
-                v-model="id_item"
-                options="optionsitem"
-                label="Id Item"
-                type="string"
-                style="width: 300px"
-              />
+              <q-input v-model="presupuesto" label="Presupuesto" type="number" style="width: 300px" />
+              <q-input v-model="id_lote" options="optionslote" label="Id Lote" type="string" style="width: 300px" />
+              <q-input v-model="id_contrato" options="optionsitem" label="Id Item" type="string" style="width: 300px" />
             </q-card-section>
           </div>
 
@@ -56,57 +36,26 @@
     </q-dialog>
     <div style="width: 1000px">
       <div class="btn-agregar">
-        <q-btn
-          label="Agregar Presupuesto"
-          @click="agregarPresupuesto()"
-          style="background-color: #2e7d32 !important"
-        />
+        <q-btn label="Agregar Presupuesto" @click="agregarPresupuesto()" style="background-color: #2e7d32 !important" />
         <router-link to="/itemPresupuesto">
           <q-btn label="Volver Atras" style="background-color: #2e7d32; color: white;" />
         </router-link>
       </div>
       <div class="q-pa-md">
-        <q-table
-          class="my-sticky-virtscroll-table"
-          virtual-scroll
-          flat
-          bordered
-          v-model:pagination="pagination"
-          :rows-per-page-options="[0]"
-          :virtual-scroll-sticky-size-start="48"
-          row-key="index"
-          :rows="rows"
-          :columns="columns"
-          style="height: 600px"
-        >
+        <q-table class="my-sticky-virtscroll-table" virtual-scroll flat bordered v-model:pagination="pagination"
+          :rows-per-page-options="[0]" :virtual-scroll-sticky-size-start="48" row-key="index" :rows="rows"
+          :columns="columns" style="height: 600px">
           <template v-slot:body-cell-estado="props">
             <q-td :props="props">
-              <label for="" v-if="props.row.estado == 1" style="color: green"
-                >Activo</label
-              >
+              <label for="" v-if="props.row.estado == 1" style="color: green">Activo</label>
               <label for="" v-else style="color: red">Inactivo</label>
             </q-td>
           </template>
           <template v-slot:body-cell-opciones="props">
             <q-td :props="props" class="botones">
-              <q-btn
-                color="white"
-                text-color="black"
-                label="🖋️"
-                @click="editarFicha(props.row)"
-              />
-              <q-btn
-                glossy
-                label="❌"
-                @click="inactivarFicha(props.row._id)"
-                v-if="props.row.estado == 1"
-              />
-              <q-btn
-                glossy
-                label="✔️"
-                @click="activarFicha(props.row._id)"
-                v-else
-              />
+              <q-btn color="white" text-color="black" label="🖋️" @click="editarFicha(props.row)" />
+              <q-btn glossy label="❌" @click="inactivarFicha(props.row._id)" v-if="props.row.estado == 1" />
+              <q-btn glossy label="✔️" @click="activarFicha(props.row._id)" v-else />
               <router-link to="/distriLoteFicha">
                 <q-btn color="white" text-color="black" label="fichas" />
               </router-link>
@@ -136,7 +85,7 @@ let rows = ref([]);
 let fixed = ref(false);
 let id_lote = ref("");
 let presupuesto = ref("");
-let id_item = ref("");
+let id_contrato = ref("");
 let cambio = ref(0);
 let optionsitem = ref("");
 let optionslote = ref("");
@@ -146,7 +95,8 @@ let pagination = ref({ rowsPerPage: 0 });
 let Dispresupuestos = ref([]);
 async function obtenerInfo() {
   try {
-    const r = await distriPresupuestoStore.obtenerInfoDispresupuestos();
+    const r = await distriPresupuestoStore.obtenerInfoDislote_contrato();
+    console.log(r);
     Dispresupuestos.value = distriPresupuestoStore.Dispresupuestos;
     rows.value = r.reverse();
     console.log(r);
@@ -186,8 +136,8 @@ obteneritem();
 const columns = [
   { name: "presupuesto", label: "Presupuesto", field: "presupuesto", sortable: true, align: "left" },
   { name: "presupuestoDisponible", label: "Presupuesto disponible", field: "presupuestoDisponible", sortable: true, align: "left" },
-  { name: "id_lote", label: "Nombre del lote", field: val=>val.id_lote.nombre, sortable: true, align: "left" },
-  { name: "id_item", label: " Nombre del item", field: val=>val.id_item.nombre, sortable: true, align: "left" },
+  { name: "id_lote", label: "Nombre del lote", field: val => val.id_lote.nombre, sortable: true, align: "left" },
+  { name: "id_contrato", label: " Nombre del item", field: val => val.id_contrato.nombre, sortable: true, align: "left" },
   {
     name: "estado",
     label: "Estado",
@@ -230,7 +180,7 @@ function validar() {
       mostrarError.value = false;
       error.value = "";
     }, 2200);
-  } else if (id_item.value.toString().trim() == "") {
+  } else if (id_contrato.value.toString().trim() == "") {
     mostrarData.value = false;
     mostrarError.value = true;
     error.value = "Seleccione algun item";
@@ -240,7 +190,7 @@ function validar() {
       error.value = "";
     }, 2200);
 
-    if (!presupuesto.value && !id_item.value && !id_lote.value) {
+    if (!presupuesto.value && !id_contrato.value && !id_lote.value) {
       badMessage.value = "Por favor rellene los campos";
       showBad();
     } else {
@@ -269,7 +219,7 @@ async function editaragregarFicha() {
         await distriPresupuestoStore.postFicha({
           presupuesto: presupuesto.value,
           id_lote: id_lote.value,
-          id_item: id_item.value,
+          id_contrato: id_contrato.value,
         });
         if (notification) {
           notification();
@@ -303,7 +253,7 @@ async function editaragregarFicha() {
           await distriPresupuestoStore.putEditarFicha(id, {
             presupuesto: presupuesto.value,
             id_lote: id_lote.value,
-            id_item: id_item.value,
+            id_contrato: id_contrato.value,
           });
           if (notification) {
             notification();
@@ -337,7 +287,7 @@ async function editaragregarFicha() {
 function limpiar() {
   presupuesto.value = " ";
   id_lote.value = " ";
-  id_item.value = " ";
+  id_contrato.value = " ";
 }
 
 let validacion = ref(false);
@@ -366,7 +316,7 @@ function editarFicha(data) {
   fixed.value = true;
   id_lote.value = data.id_lote;
   presupuesto.value = data.presupuesto;
-  id_item.value = data.id_item;
+  id_contrato.value = data.id_contrato;
   cambio.value = 1;
 }
 async function inactivarFicha(id) {

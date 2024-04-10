@@ -90,7 +90,7 @@ const links = [
   { text: "Lote", icon: "store", path: "/Lote" },
   { text: "Pedido", icon: "shopping_cart", path: "/Pedido" },
   { text: "Producto", icon: "local_offer", path: "/Producto" },
-  { text: "Item presupuesto", icon: "attach_money", path: "/itemPresupuesto" },
+  { text: "Contrato", icon: "attach_money", path: "/itemPresupuesto" },
 ];
 
 const navigateTo = (path) => {
