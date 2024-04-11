@@ -1,7 +1,7 @@
 <template>
     <div class="body">
       <div class="container">
-        <form @submit.prevent="verificarCodigo" class="form">
+        <form @submit.prevent="cambiarPassword" class="form">
           <div class="center-img">
             <img :src="images" class="fondo" />
           </div>
@@ -11,20 +11,20 @@
             <div class="flex">
               <label>
                 <input
-                  type="text"
+                  type="password"
                   class="input"
                   placeholder=""
-                  v-model="codigoVerificacion"
+                  v-model="newPassword"
                   required
                 />
                 <span>Nueva contraseña</span>
               </label>
               <label>
                 <input
-                  type="text"
+                  type="password"
                   class="input"
                   placeholder=""
-                  v-model="codigoVerificacion"
+                  v-model="confirmPassword"
                   required
                 />
                 <span>Digitala de nuevo</span>
@@ -48,62 +48,83 @@
   </template>
   
   <script setup>
-  import { ref, computed } from "vue";
-  import { useRouter } from "vue-router";
-  import { useUsuarioStore } from "../stores/usuario.js";
-  import { Cookies } from "quasar";
-  import images from "../assets/fondo12.png";
-  
-  const correoElectronico = ref("");
-  const codigoVerificacion = ref("");
-  const useUsuario = useUsuarioStore();
-  const router = useRouter();
-  
-  const correoValido = computed(() => {
-    return (
-      !!correoElectronico.value &&
-      /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correoElectronico.value)
-    );
-  });
-  
-  const codigoValido = computed(() => {
-    return !!codigoVerificacion.value;
-  });
-  
-  async function verificarCodigo() {
-    try {
-      // Hacer una solicitud al servidor para verificar el código
-      const response = await useUsuario.verificarCodigo(codigoVerificacion.value);
-  
-      if (response.status === 200) {
-        Cookies.set("codigo", codigoVerificacion.value, { expires: 1 });
-        router.push("/NuevaContrasena");
-      } else {
-        // Manejar el caso en el que el código no es válido
-        console.log("Código no válido");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+import { Cookies, useQuasar } from 'quasar'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router';
+import { useUsuarioStore } from "../stores/usuario.js";
+import images from "../assets/fondo12.png";
+
+
+const router = useRouter();
+const isPwd = ref(true);
+const isPwdb = ref(true);
+const isPw = ref(true);
+const password = ref('')
+const newPassword = ref('');
+const confirmPassword = ref('');
+const loadingContraseña = ref(false);
+const hideOne = ref(true);
+const showTwo = ref(false);
+const onReset = () => {
+  password.value = ''
+  newPassword.value = '';
+  confirmPassword.value = '';
+}
+
+
+
+const isPasswordValid = (value) => {
+  const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@#$%^&+=/()])[A-Za-z\d@#$%^&+=/()]{8,}$/;
+  return passwordRegex.test(value);
+}
+
+
+function messageSuccessful() {
+  Cookies.remove()
+  if (newPassword.value === confirmPassword.value) {
+    showTwo.value = true;
+    hideOne.value = false;
   }
-  
-  async function enviarCorreo() {
-    try {
-      const response = await useUsuario.sendemail({
-        Correo: correoElectronico.value,
-      });
-  
-      if (response.status === 200) {
-        Cookies.set("correo", correoElectronico.value, { expires: 1 });
-        activar.value = true;
-        router.push("/codigo-recuperacion");
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      loadVerificar.value = false;
+}
+
+function home() {
+  router.push('/')
+}
+
+//Formulario
+const useUsuario = useUsuarioStore()
+const data = ref({
+  password,
+  newPassword, confirmPassword
+})
+async function cambiarPassword() {
+  try {
+    const response = await useUsuario.nuevaPassword(data.value)
+    console.log(response);
+
+    if (!response) return
+    if (response.error) {
+      notificar('negative', response.error)
+      return
     }
+
+    messageSuccessful()
+  } catch (error) {
+    console.log(error);
   }
+}
+
+//Notificaciones
+const $q = useQuasar();
+function notificar(tipo, msg) {
+  $q.notify({
+    type: tipo,
+    message: msg,
+    position: "top",
+    timeout: 3000,
+  });
+}
+
   </script>
   <style>
   .container {

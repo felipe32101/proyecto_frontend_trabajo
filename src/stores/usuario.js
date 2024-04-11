@@ -79,17 +79,30 @@ const recuperarcontraseña= async () => {
     }
   };
 
-//   const newpassword = async (data) => {
-//     try {
-//         let res = await axios.put("usuario/nuevaPassword", data);
-//         console.log("Felicidades mi loko lo lograste", res)
-//         return res
-//     } catch (error) {
-//       console.log("Nokas pelotas v3", error);
-//         throw error;
-//     }
-// };
+  const nuevaPassword = async (data) => {
+    try {
+      const response = await axios.put(`usuario/nueva-password`, data);
+      console.log(response);
 
+      return response;
+    } catch (error) {
+      console.log(error);
+      if (error.message === "Network Error") {
+        notificar("negative", "Sin conexión, por favor intente recargar");
+        return null;
+      }
+      if (
+        error.response.data.error === "No hay token en la peticion" ||
+        error.response.data.error === "Token no válido" ||
+        error.response.data.error.name === "TokenExpiredError"
+      ) {
+        notificar("negative", "Por favor vuelva a iniciar sesión");
+        router.push("/");
+        return null;
+      }
+      return error.response.data;
+    }
+  };
   const putusuarioInactivar = async (id) => {
     try {
       console.log(id, 'El usuario');
@@ -102,7 +115,6 @@ const recuperarcontraseña= async () => {
 
     }
   };
-
   
   const putusuarioActivar = async (id) => {
     try {
@@ -130,7 +142,7 @@ const recuperarcontraseña= async () => {
   }
   return {
     usuarios, usuario, token, email,
-    obtenerusuario, postusuario, login,putusuarioActivar, putusuarioInactivar, sendemail, recuperarcontraseña,confirmarCodigo,
+    obtenerusuario, postusuario, login,putusuarioActivar, putusuarioInactivar, sendemail, recuperarcontraseña,confirmarCodigo,nuevaPassword,
   }
 }, {
   persist: true,

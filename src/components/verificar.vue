@@ -29,7 +29,6 @@
               </router-link>
               </button>
               <button type="submit" class="submit">Recuperar</button>
-              
           </div>
         </div>
       </form>
@@ -68,21 +67,21 @@ const correoElectronico = ref('');
     } catch (error) {
       console.log(error);
     }
-  }
+  
 
 
-async function enviarCorreo() {
-  try {
-    const response = await useUsuario.sendemail({ Correo: correoElectronico.value });
+// async function enviarCorreo() {
+//   try {
+//     const response = await useUsuario.sendemail({ Correo: correoElectronico.value });
 
-    if (response.status === 200) {
-      Cookies.set('correo', correoElectronico.value, { expires: 1 });
-      activar.value = true;
-      router.push('/codigo-recuperacion');
-    }
-  } catch (error) {
-    console.log(error);
-  }
+//     if (response.status === 200) {
+//       Cookies.set('correo', correoElectronico.value, { expires: 1 });
+//       activar.value = true;
+//       router.push('/codigo-recuperacion');
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
 }
 </script>
 <style>
