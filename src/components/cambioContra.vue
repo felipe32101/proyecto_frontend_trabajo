@@ -5,8 +5,8 @@
           <div class="center-img">
             <img :src="images" class="fondo" />
           </div>
-          <p class="title">Codigo de verificacion</p>
-          <label for="email" class="text">Por favor, digite el código de verificación enviado a {{ useUsuario.email }}</label>
+          <p class="title">Nueva contraseña</p>
+          <label for="email" class="text">Por favor digita tu nueva contraseña</label>
           <div class="q-form">
             <div class="flex">
               <label>
@@ -17,7 +17,17 @@
                   v-model="codigoVerificacion"
                   required
                 />
-                <span>Código de verificación</span>
+                <span>Nueva contraseña</span>
+              </label>
+              <label>
+                <input
+                  type="text"
+                  class="input"
+                  placeholder=""
+                  v-model="codigoVerificacion"
+                  required
+                />
+                <span>Digitala de nuevo</span>
               </label>
             </div>
             <div class="bot">
@@ -28,7 +38,7 @@
                   <span class="lable">Cancelar</span>
                 </router-link>
                 </button>
-                <button type="submit" class="submit">Recuperar</button>
+                <button type="submit" class="submit">Aceptar</button>
                 
             </div>
           </div>
@@ -182,6 +192,7 @@
   
   .flex {
     display: flex;
+    flex-direction: column;
     width: 100%;
     gap: 10px;
     align-items: center;
