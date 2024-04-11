@@ -63,7 +63,7 @@ const telefonoUser = useUsuario.usuario.telefono
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #265c1a;
 }
 
 .form {
@@ -84,7 +84,6 @@ const telefonoUser = useUsuario.usuario.telefono
 .flex {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
 }
 
 .avatar-container {
@@ -101,13 +100,18 @@ const telefonoUser = useUsuario.usuario.telefono
 }
 
 .profile-info {
-  margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  width: 80%;
 }
 
 .info-heading {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: bold;
   margin-bottom: 10px;
+  justify-content: center; 
+  display: flex; 
+  margin-top: 15px;
 }
 
 .info-row {
