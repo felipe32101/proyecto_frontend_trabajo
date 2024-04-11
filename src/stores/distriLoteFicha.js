@@ -2,13 +2,14 @@ import { defineStore } from 'pinia';
 import axios from 'axios';
 import { ref } from 'vue';
 
-export const useDistriLoteFicha = defineStore('disLoteFicha', () => {
+export const useDistriLoteFicha = defineStore('dislote_depen', () => {
     const disLoteFicha = ref([]);
   
-    const obtenerInfoDisLoteFicha = async () => {
+    const obtenerInfodislote_depen = async () => {
         try {
-            let responseDisLoteFicha = await axios.get('disloteficha/all');
-            return responseDisLoteFicha.data.disLoteFicha
+            let responseDisLoteFicha = await axios.get('dislote_depen/all');
+            console.log(responseDisLoteFicha);
+            return responseDisLoteFicha.data
         } catch (error) {
             throw error
         }
@@ -17,7 +18,7 @@ export const useDistriLoteFicha = defineStore('disLoteFicha', () => {
     const postAgregardisLoteFicha = async (data) => {
         try {
             console.log('d', data);
-            let res = await axios.post('disloteficha/guardar', data);
+            let res = await axios.post('dislote_depen/guardar', data);
             return res
         } catch (error) {
             throw error
@@ -27,7 +28,7 @@ export const useDistriLoteFicha = defineStore('disLoteFicha', () => {
     const putEditarDisLoteFicha_pre = async (id, data) => {
         try {
             console.log(id, data);
-            let res = await axios.put(`disloteficha/distribuciones/${id}`, data);
+            let res = await axios.put(`dislote_depen/distribuciones/${id}`, data);
             console.log(res);
             return res
         } catch (error) {
@@ -37,7 +38,7 @@ export const useDistriLoteFicha = defineStore('disLoteFicha', () => {
 
     const putDisLoteFichaInactivar = async (id) => {
         try {
-            let r = await axios.put(`disloteficha/distribuciones/desactivar/${id}`)
+            let r = await axios.put(`dislote_depen/distribuciones/desactivar/${id}`)
             return r
         } catch (error) {
             console.log(error, 'Error al cambiar el estado de la ficha');
@@ -45,7 +46,7 @@ export const useDistriLoteFicha = defineStore('disLoteFicha', () => {
     }
     const putDisLoteFichaActivar = async (id) => {
         try {
-            let r = await axios.put(`disloteficha/distribuciones/activar/${id}`)
+            let r = await axios.put(`dislote_depen/distribuciones/activar/${id}`)
             return r
         } catch (error) {
             console.log(error, 'Error al cambiar el estado de la ficha');
@@ -54,6 +55,6 @@ export const useDistriLoteFicha = defineStore('disLoteFicha', () => {
 
     return {
         disLoteFicha,
-        obtenerInfoDisLoteFicha, postAgregardisLoteFicha, putEditarDisLoteFicha_pre,putDisLoteFichaInactivar, putDisLoteFichaActivar
+        obtenerInfodislote_depen, postAgregardisLoteFicha, putEditarDisLoteFicha_pre,putDisLoteFichaInactivar, putDisLoteFichaActivar
     };
 });
