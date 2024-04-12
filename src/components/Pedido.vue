@@ -50,7 +50,7 @@
         </div>
       </q-card>
     </q-dialog>
-    <div style="width: 1000px">
+    <div style="width: 100vh">
       <div class="btn-agregar">
         <q-btn
           class="bg-secondary"
@@ -70,7 +70,6 @@
           row-key="index"
           :rows="rows"
           :columns="columns"
-          style="height: 600px"
         >
         <template v-slot:body-cell-estado="props">
             <q-td :props="props">
@@ -150,21 +149,21 @@ const columns = [
     field: "fechacreacion",
     format: (val) => format(new Date(val), "yyyy-MM-dd"),
     sortable: true,
-    align: "left",
+    align: "center",
   },
   {
     name: "idficha",
     label: "Codigo Ficha",
     field: (val) => val.idficha.codigo_ficha,
     sortable: true,
-    align: "left",
+    align: "center",
   },
   {
     name: "idInstructorEncargado",
     label: "Encargado",
     field: (val)=> val.idInstructorEncargado.nombre,
     sortable: true,
-    align: "left",
+    align: "center",
   },
 
   {
@@ -172,7 +171,7 @@ const columns = [
     label: "total",
     field: "total",
     sortable: true,
-    align: "left",
+    align: "center",
     format: (val) => formatCurrency(val)
   },
 
@@ -181,7 +180,7 @@ const columns = [
     label: "Estado",
     field: "estado",
     sortable: true,
-    align: "left",
+    align: "center",
     format: (val) => (val ? "Activo" : "Inactivo"),
   },
   {

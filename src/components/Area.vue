@@ -18,7 +18,7 @@
           </q-card-section>
           <q-separator />
           <div v-if="mostrarData">
-            <q-card-section style="max-height: 50vh" class="scroll">
+            <q-card-section style="max-height: 100vh" class="scroll">
               <q-input v-model="nombre" label="nombre" style="width: 300px" />
             </q-card-section>
           </div>
@@ -34,7 +34,7 @@
       </q-card>
     </q-dialog>
     <div>
-      <div style="width: 40vw">
+      <div style= "width: 100vh">
         <div class="btn-agregar-area">
           <q-btn
             class="btn-agregar"
@@ -82,7 +82,9 @@
                   @click="activarArea(props.row._id)"
                   v-else
                 />
+              
               </q-td>
+            
             </template>
           </q-table>
         </div>
@@ -127,7 +129,7 @@ const columns = [
     label: "Nombre",
     field: "nombre",
     sortable: true,
-    align: "left",
+    align: "center",
   },
 
   {
@@ -135,7 +137,7 @@ const columns = [
     label: "Estado",
     field: "estado",
     sortable: true,
-    align: "left",
+    align: "center",
     format: (val) => (val ? "Activo" : "Inactivo"),
   },
   {
@@ -331,6 +333,8 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+
+
 .modal-content {
   width: 480px;
   height: 400px;
@@ -469,4 +473,5 @@ h1 {
   cursor: pointer;
   background-color: rgba(0, 128, 0, 0.53);
 }
+
 </style>

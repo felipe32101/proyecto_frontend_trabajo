@@ -4,14 +4,14 @@
       <h1 style="text-align: center; margin-top: 50px;">Usuarios</h1>
       <hr />
     </div>
-    <div style="width: 1000px;">
+    <div style="width: 100vh;">
       <div class="btn-agregar">
         <q-btn class="bg-secondary" label="Agregar usuario" @click="agregarUsuario()" style=" background-color: #2e7d32 !important;"/>
       </div> <br>
 
       <q-table class="my-sticky-virtscroll-table" virtual-scroll flat bordered v-model:pagination="pagination"
         :rows-per-page-options="[0]" :virtual-scroll-sticky-size-start="48" row-key="index" :rows="rows"
-        :columns="columns" style="height: 600px;">
+        :columns="columns">
         <template v-slot:body-cell-estado="props">
           <q-td :props="props">
             <label for="" v-if="props.row.estado == 1" style="color: green">Activo</label>
@@ -86,7 +86,7 @@ const columns = [
     label: "Estado",
     field: "estado",
     sortable: true,
-    align: "left",
+    align: "center",
     format: (val) => (val ? "Activo" : "Inactivo"),
   },
   {
