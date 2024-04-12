@@ -152,8 +152,8 @@ const columns = [
     align: "center",
   },
   {
-    name: "idficha",
-    label: "Codigo Ficha",
+    name: "codigo",
+    label: "Codigo ",
     field: (val) => val.idficha.codigo_ficha,
     sortable: true,
     align: "center",

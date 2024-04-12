@@ -105,7 +105,7 @@ const columns = [
   { name: "codigo_ficha", label: "codigo ficha", field: "codigo_ficha", sortable: true, align: "center" },
   { name: "nombre", label: "Nombre", field: "nombre", sortable: true, align: "center" },
   { name: "nivel_de_formacion", label: "Nivel", field: "nivel_de_formacion", sortable: true, align: "center" },
-  { name: "fecha_inicio", label: "fecha inicio", field: "fecha_inicio", format: (val) => format(new Date(val), "yyyy-MM-dd"), sortable: true, align: "center" },
+  { name: "fecha_inicio", label: "fecha inicio", field: "fecha_inicio", format: (val) => format(new Date(val), "dd-yyyy-MM"), sortable: true, align: "center" },
   { name: "ficha_fin", label: "ficha fin", field: "ficha_fin", format: (val) => format(new Date(val), "yyyy-MM-dd"), sortable: true, align: "center" },
 
   {
@@ -217,6 +217,7 @@ async function editaragregarFicha() {
       }
       try {
         showDefault();
+        console.log(fecha_inicio.value);
         const respuestas = await FichaStore.postFicha({
           nombre: nombre.value,
           codigo_ficha: codigo_ficha.value,
