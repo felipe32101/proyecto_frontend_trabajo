@@ -18,11 +18,11 @@
           <q-separator />
           <div v-if="mostrarData">
             <q-card-section style="max-height: 50vh" class="scroll">
-              <q-input filled v-model="fechacreacion" label="Fecha" mask="date" :rules="['date']">
+              <q-input filled v-model="fechaentrega" label="Fecha" mask="date" :rules="['date']">
       <template v-slot:append>
         <q-icon name="event" class="cursor-pointer">
           <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date v-model="fechacreacion">
+            <q-date v-model="fechaentrega">
               <div class="row items-center justify-end">
                 <q-btn v-close-popup label="Close" color="primary" flat />
               </div>
@@ -31,7 +31,7 @@
         </q-icon>
       </template>
     </q-input>
-              <q-select filled v-model="idficha" :options="OpcionesFicha" label="Id Ficha" emit-value map-options style="min-width: 250px; max-width: 300px"/><br>
+              <q-select filled v-model="codigo_ficha" :options="OpcionesFicha" label="Id Ficha" emit-value map-options style="min-width: 250px; max-width: 300px"/><br>
               <q-select filled v-model="idInstructorEncargado" :options="OpcionesUsuario" label="Encargado" emit-value map-options style="min-width: 250px; max-width: 300px"/><br>
               <q-input filled type="number" v-model="total" label="Total" emit-value map-options style="min-width: 250px; max-width: 350px"/>
             </q-card-section>
@@ -50,7 +50,7 @@
         </div>
       </q-card>
     </q-dialog>
-    <div style="width: 100vh">
+    <div style="width: 1000px">
       <div class="btn-agregar">
         <q-btn
           class="bg-secondary"
@@ -70,6 +70,7 @@
           row-key="index"
           :rows="rows"
           :columns="columns"
+          style="height: 600px"
         >
         <template v-slot:body-cell-estado="props">
             <q-td :props="props">
@@ -110,9 +111,9 @@ let error = ref("Ingrese todos los datos para la creacion de un vendedor");
 let text = ref("");
 let rows = ref([]);
 let fixed = ref(false);
-let fechacreacion = ref("");
+let fechaentrega = ref("");
 let total = ref("");
-let idficha = ref("");
+let codigo_ficha = ref("");
 let idInstructorEncargado = ref("");
 let cambio = ref(0);
 let mostrarError = ref(false);
@@ -122,10 +123,9 @@ let pedidos = ref([]);
 async function obtenerInfo() {
   try {
     await PedidoStore.obtenerpedido();
-    console.log(PedidoStore.pedidos);
     pedidos.value = PedidoStore.pedidos;
     rows.value = PedidoStore.pedidos;
-    // console.log(rows.value);
+    console.log(PedidoStore.pedidos);
   } catch (error) {
     console.log(error);
   }
@@ -144,34 +144,35 @@ function formatCurrency(amount) {
 
 const columns = [
   {
-    name: "fechacreacion",
+    name: "fechaentrega",
     label: "Fecha creacion",
-    field: "fechacreacion",
+    field: "fechaentrega",
     format: (val) => format(new Date(val), "yyyy-MM-dd"),
     sortable: true,
-    align: "center",
+    align: "left",
   },
   {
-    name: "codigo",
-    label: "Codigo ",
-    field: (val) => val.idficha.codigo_ficha,
+    name: "codigo_ficha",
+    label: "Codigo Ficha",
+    field: (val) => val.codigo_ficha.codigo_ficha,
     sortable: true,
-    align: "center",
+    align: "left",
   },
   {
     name: "idInstructorEncargado",
     label: "Encargado",
     field: (val)=> val.idInstructorEncargado.nombre,
     sortable: true,
-    align: "center",
+    align: "left",
   },
 
+  
   {
     name: "total",
     label: "total",
     field: "total",
     sortable: true,
-    align: "center",
+    align: "left",
     format: (val) => formatCurrency(val)
   },
 
@@ -180,7 +181,7 @@ const columns = [
     label: "Estado",
     field: "estado",
     sortable: true,
-    align: "center",
+    align: "left",
     format: (val) => (val ? "Activo" : "Inactivo"),
   },
   {
@@ -199,11 +200,11 @@ function agregarPedido() {
   limpiar();
 }
 function validar() {
-  if (fechacreacion.value.trim() == "") {
+  if (fechaentrega.value.trim() == "") {
     mostrarData.value = false;
     mostrarError.value = true;
-    error.value = "Digite el fechacreacion del pedido por favor";
-  } else if (idficha.value == "") {
+    error.value = "Digite el fechaentrega del pedido por favor";
+  } else if (codigo_ficha.value == "") {
     mostrarData.value = false;
     mostrarError.value = true;
     error.value = "Seleccione una de la fichas";
@@ -233,10 +234,10 @@ async function editarAgregarPedio() {
   validar();
   if (validacion.value === true) {
     if (cambio.value === 0) {
-      if (fechacreacion.value.trim() === "") {
+      if (fechaentrega.value.trim() === "") {
         mostrarData.value = false;
         mostrarError.value = true;
-        error.value = "Por favor digite un fechacreacion";
+        error.value = "Por favor digite un fechaentrega";
         setTimeout(() => {
           mostrarData.value = true;
           mostrarError.value = false;
@@ -248,8 +249,8 @@ async function editarAgregarPedio() {
         showDefault();
         console.log(idInstructorEncargado.value);
         await PedidoStore.postpedido({
-          fechacreacion: fechacreacion.value,
-          idficha: idficha.value,
+          fechaentrega: fechaentrega.value,
+          codigo_ficha: codigo_ficha.value,
           idInstructorEncargado: idInstructorEncargado.value,
           total: total.value,
         });
@@ -282,8 +283,8 @@ async function editarAgregarPedio() {
         try {
           showDefault();
           await PedidoStore.putEditarpedido(id, {
-          fechacreacion: fechacreacion.value,
-          idficha: idficha.value,
+          fechaentrega: fechaentrega.value,
+          codigo_ficha: codigo_ficha.value,
           idInstructorEncargado: idInstructorEncargado.value,
           total: total.value,
           });
@@ -321,16 +322,16 @@ function editarPedido(data) {
   console.log(data);
   idPedido.value = String(data._id)
   fixed.value = true;
-  fechacreacion.value = format(new Date(data.fechacreacion), "yyyy-MM-dd")
+  fechaentrega.value = format(new Date(data.fechaentrega), "yyyy-MM-dd")
   idInstructorEncargado.value = data.idInstructorEncargado.nombre
-  idficha.value = data.idficha.codigo_ficha
+  codigo_ficha.value = data.codigo_ficha.codigo_ficha
   total.value = data.total
   cambio.value = 1;
 }
 
 function limpiar() {
-  fechacreacion.value = "";
-  idficha.value = "";
+  fechaentrega.value = "";
+  codigo_ficha.value = "";
   idInstructorEncargado.value = "";
   total.value = "";
 }
