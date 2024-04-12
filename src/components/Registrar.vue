@@ -45,7 +45,6 @@
             <option value="instructor">Instructor</option>
             <option value="bodega">Bodega</option>
             <option value="administrador">Administrador</option>
-            <option value="superAdmin">super Admin</option>
           </select>
         </label>
       </div>
@@ -238,6 +237,7 @@ const registrarUsuario = async () => {
 
 .flex {
   display: flex;
+  flex-direction: row;
   width: 100%;
   gap: 10px;
   align-items: center;
