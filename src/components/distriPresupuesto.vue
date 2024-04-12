@@ -16,8 +16,8 @@
           <div v-if="mostrarData">
             <q-card-section style="max-height: 50vh" class="scroll">
               <q-input v-model="presupuesto" label="Presupuesto" type="number" style="width: 300px" />
-              <q-input v-model="id_lote" options="optionslote" label="Id Lote" type="string" style="width: 300px" />
-              <q-input v-model="id_contrato" options="optionsitem" label="Id Item" type="string" style="width: 300px" />
+              <q-select filled v-model="id_lote" :options="optionslote" label="Id Lote" type="string" style="width: 300px" />
+              <q-select filled v-model="id_contrato" :options="optionsitem" label="Id Item" type="string" style="width: 300px" />
             </q-card-section>
           </div>
 
@@ -87,8 +87,8 @@ let id_lote = ref("");
 let presupuesto = ref("");
 let id_contrato = ref("");
 let cambio = ref(0);
-let optionsitem = ref("");
-let optionslote = ref("");
+let optionsitem = ref([]);
+let optionslote = ref([]);
 let mostrarError = ref(false);
 let mostrarData = ref(true);
 let pagination = ref({ rowsPerPage: 0 });
@@ -96,8 +96,8 @@ let Dispresupuestos = ref([]);
 async function obtenerInfo() {
   try {
     const r = await distriPresupuestoStore.obtenerInfoDislote_contrato();
-    console.log(r);
-    Dispresupuestos.value = distriPresupuestoStore.Dispresupuestos;
+    console.log("r",r);
+    Dispresupuestos.value = distriPresupuestoStore.disdependencia;
     rows.value = r.reverse();
     console.log(r);
   } catch (error) {
@@ -105,14 +105,25 @@ async function obtenerInfo() {
   }
 }
 
+function formatCurrency(amount) {
+  // Formatear el número con separadores de miles y decimales
+  const formattedAmount = new Intl.NumberFormat('es-CO', {
+    style: 'currency',
+    currency: 'COP'
+  }).format(amount);
+
+  return formattedAmount;
+}
+
 async function obtenerlote() {
   try {
-    await loteStore.obtenerInfoLotes();
-    optionslote.value = loteStore.lotes.map((lote) => ({
+    const response = await loteStore.obtenerInfoLotes();
+    console.log(response);
+    optionslote.value = response.lote.map((lote) => ({
       label: `${lote.nombre} `,
       value: String(lote._id),
     }));
-    console.log(optionslote);
+    console.log(optionslote.value);
   } catch (error) {
     console.log(error);
   }
@@ -134,8 +145,8 @@ async function obteneritem() {
 }
 obteneritem();
 const columns = [
-  { name: "presupuesto", label: "Presupuesto", field: "presupuesto", sortable: true, align: "left" },
-  { name: "presupuestoDisponible", label: "Presupuesto disponible", field: "presupuestoDisponible", sortable: true, align: "left" },
+  { name: "presupuesto", label: "Presupuesto", field: "presupuesto", sortable: true, align: "left", format: (val) => formatCurrency(val) },
+  { name: "presupuestoDisponible", label: "Presupuesto disponible", field: "presupuestoDisponible", sortable: true, align: "left", format: (val) => formatCurrency(val) },
   { name: "id_lote", label: "Nombre del lote", field: val => val.id_lote.nombre, sortable: true, align: "left" },
   { name: "id_contrato", label: " Nombre del item", field: val => val.id_contrato.nombre, sortable: true, align: "left" },
   {
@@ -165,7 +176,7 @@ function validar() {
   if (presupuesto.value.toString().trim() == "") {
     mostrarData.value = false;
     mostrarError.value = true;
-    error.value = "Digite el codigo de la ficha por favor";
+    error.value = "Digite el presupuesto de la ficha por favor";
     setTimeout(() => {
       mostrarData.value = true;
       mostrarError.value = false;
@@ -193,33 +204,36 @@ function validar() {
     if (!presupuesto.value && !id_contrato.value && !id_lote.value) {
       badMessage.value = "Por favor rellene los campos";
       showBad();
-    } else {
-      validacion.value = true;
-    }
+    } 
+  }else{
+    validacion.value = true
+    console.log(validacion.value);
   }
 }
 
 async function editaragregarFicha() {
   validar();
   if (validacion.value === true) {
+  console.log("Funcion");
+
     if (cambio.value === 0) {
-      if (id_lote.value.trim() === "") {
-        mostrarData.value = false;
-        mostrarError.value = true;
-        error.value = "Por favor digite un id_lote";
-        setTimeout(() => {
-          mostrarData.value = true;
-          mostrarError.value = false;
-          error.value = "";
-        }, 2200);
-        return;
-      }
+      // if (id_lote.value.trim() === "") {
+      //   mostrarData.value = false;
+      //   mostrarError.value = true;
+      //   error.value = "Por favor digite un id_lote";
+      //   setTimeout(() => {
+      //     mostrarData.value = true;
+      //     mostrarError.value = false;
+      //     error.value = "";
+      //   }, 2200);
+      //   return;
+      // }
       try {
         showDefault();
-        await distriPresupuestoStore.postFicha({
+        await distriPresupuestoStore.postAgregardislote_contrato({
           presupuesto: presupuesto.value,
-          id_lote: id_lote.value,
-          id_contrato: id_contrato.value,
+          id_lote: id_lote._rawValue.value,
+          id_contrato: id_contrato._rawValue.value,
         });
         if (notification) {
           notification();

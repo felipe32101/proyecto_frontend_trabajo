@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ref } from 'vue';
 
 export const usedistriPresupuesto = defineStore('Dislote_contrato', () => {
-    const Dislote_contrato = ref([]);
+    const disdependencia = ref([]);
   
     const obtenerInfoDislote_contrato = async () => {
         try {
@@ -55,7 +55,7 @@ export const usedistriPresupuesto = defineStore('Dislote_contrato', () => {
     }
 
     return {
-        Dislote_contrato,
+        disdependencia,
         obtenerInfoDislote_contrato, postAgregardislote_contrato, putEditardislote_contrato,putdislote_contratoActivar, putdislote_contratoInactivar
     };
 });
