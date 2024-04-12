@@ -125,7 +125,7 @@ async function obtenerInfo() {
   try {
     await loteStore.obtenerInfoLotes();
     lotes.value = loteStore.lotes;
-    rows.value = loteStore.lotes;
+    rows.value = loteStore.lotes.reverse();
     console.log(rows.value);
   } catch (error) {
     console.log(error);
@@ -247,6 +247,7 @@ async function editarAgregarLote() {
         });
         console.log("a");
         obtenerInfo();
+        fixed.value = false;
       } catch (error) {
         if (notification) {
           notification();

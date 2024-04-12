@@ -10,36 +10,53 @@
         <div class="profile-info">
           <h6 class="info-heading">Información del perfil</h6>
 
+          <!-- Usamos un v-if para mostrar inputs en lugar de spans cuando se active el modo de edición -->
           <div class="info-row">
             <label class="info-label" for="username">Usuario:</label>
-            <span class="info-value">{{ username }}</span>
+            <span v-if="!editMode" class="info-value">{{ username }}</span>
+            <input v-else v-model="editUsername" class="info-value-input" type="text">
           </div>
 
           <div class="info-row">
             <label class="info-label" for="nombre">Nombre:</label>
-            <span class="info-value">{{ nombreUser }}</span>
+            <span v-if="!editMode" class="info-value">{{ nombreUser }}</span>
+            <input v-else v-model="editNombre" class="info-value-input" type="text">
           </div>
 
           <div class="info-row">
-            <label class="info-label" for="cedula">Cédula:</label>
-            <span class="info-value">{{ cedulaUser }}</span>
+            <label class="info-label" for="cedula">Cedula:</label>
+            <span v-if="!editMode" class="info-value">{{ cedulaUser }}</span>
+            <input v-else v-model="editCedula" class="info-value-input" type="text">
           </div>
 
           <div class="info-row">
             <label class="info-label" for="correo">Correo:</label>
-            <span class="info-value">{{ correoUser }}</span>
+            <span v-if="!editMode" class="info-value">{{ correoUser }}</span>
+            <input v-else v-model="editCorreo" class="info-value-input" type="text">
           </div>
 
           <div class="info-row">
-            <label class="info-label" for="telefono">Teléfono:</label>
-            <span class="info-value">{{ telefonoUser }}</span>
+            <label class="info-label" for="telefono">Telefono:</label>
+            <span v-if="!editMode" class="info-value">{{ telefonoUser }}</span>
+            <input v-else v-model="editTelefono" class="info-value-input" type="text">
           </div>
+
+          <div class="info-row">
+            <label class="info-label" for="rol">Rol:</label>
+            <span class="info-value">{{ rolUser }}</span>
+          </div>
+
+          <!-- Repite lo mismo para los demás campos -->
+
         </div>
       </div>
 
       <div class="button-container">
         <router-link to="/inicio" class="button button-back">Volver</router-link>
-        <button type="submit" class="button button-submit">Aceptar</button>
+        <!-- Cambiamos el tipo de botón y su texto según el modo de edición -->
+        <button @click="handleEdit" type="button" class="button button-submit">
+          {{ editMode ? 'Guardar' : 'Editar' }}
+        </button>
       </div>
     </form>
   </div>
@@ -47,14 +64,53 @@
 
 <script setup>
 import { useUsuarioStore } from '../stores/usuario.js'
+import { ref } from "vue";
 
 const useUsuario = useUsuarioStore()
+
+let editMode = ref(false)
 
 const username = useUsuario.usuario.usuario
 const nombreUser = useUsuario.usuario.nombre
 const cedulaUser = useUsuario.usuario.cedula
 const correoUser = useUsuario.usuario.correo
 const telefonoUser = useUsuario.usuario.telefono
+const rolUser = useUsuario.usuario.rol
+
+let editUsername = ref(username)
+let editNombre = ref(nombreUser)
+let editCedula = ref(cedulaUser)
+let editCorreo = ref(correoUser)
+let editTelefono = ref(telefonoUser)
+
+async function saveChanges() {
+  try {
+    // Llama a una función que envía los datos editados al servidor
+    await useUsuario.putEditarUsuario({
+      username: editUsername.value,
+      nombre: editNombre.value,
+      cedula: editCedula.value,
+      correo: editCorreo.value,
+      telefono: editTelefono.value,
+      // Agrega los otros campos aquí
+    });
+    
+    // Si la actualización fue exitosa, cambia al modo de visualización
+    editMode.value = false;
+  } catch (error) {
+    console.error("Error al guardar los cambios:", error);
+    // Manejar el error, por ejemplo, mostrar un mensaje al usuario
+  }
+}
+
+function handleEdit() {
+  if (editMode.value) {
+    saveChanges();
+    editMode.value = !editMode.value;
+  } else {
+    editMode.value = !editMode.value;
+  }
+}
 </script>
 
 <style scoped>
@@ -154,5 +210,12 @@ const telefonoUser = useUsuario.usuario.telefono
 
 .button:hover {
   background-color: #265c1a;
+}
+
+.info-value-input {
+  margin-left: 10px;
+  padding: 2px 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
 }
 </style>

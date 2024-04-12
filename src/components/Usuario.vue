@@ -59,7 +59,7 @@ async function obtenerInfo() {
   try {
     await UsuarioStore.obtenerusuario();
     usuarios.value = UsuarioStore.usuarios;
-    rows.value = UsuarioStore.usuarios;
+    rows.value = UsuarioStore.usuarios.reverse();
     console.log(UsuarioStore.usuarios);
   } catch (error) {
     console.log(error);
