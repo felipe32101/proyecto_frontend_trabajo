@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h1 style="text-align: center; margin-top: 50px;">Presupuesto fichas</h1>
+      <h1 style="text-align: center; margin-top: 50px;">Dependencias</h1>
       <hr />
     </div>
     <!-- Modal -->
@@ -16,8 +16,9 @@
           <div v-if="mostrarData">
             <q-card-section style="max-height: 50vh" class="scroll">
               <q-input v-model="presupuesto" label="presupuesto" type="number" style="width: 300px" />
-              <q-input v-model="id_lote" options="optionslote" label="id lote" type="string" style="width: 300px" />
-              <q-input v-model="idDistribucionPresupuesto" options="optionsitem" label="id item" type="string" style="width: 300px" />
+              <q-input v-model="presupuestoDisponible" label="presupuesto Disponible" type="number" style="width: 300px" />
+              <q-input v-model="iddiscontratolote" options="optionslote" label="id lote" type="string" style="width: 300px" />
+              <q-input v-model="iddisdependencia" options="optionsitem" label="id item" type="string" style="width: 300px" />
 
 
             </q-card-section>
@@ -86,9 +87,9 @@ let error = ref("Ingrese todos los datos para la creacion de un vendedor");
 let text = ref("");
 let rows = ref([]);
 let fixed = ref(false);
-let id_lote = ref("");
+let iddiscontratolote = ref("");
 let presupuesto = ref("");
-let idDistribucionPresupuesto = ref("")
+let iddisdependencia = ref("")
 // let idficha = ref("");
 let cambio = ref(0);
 let optionsitem = ref("");
@@ -99,9 +100,10 @@ let pagination = ref({ rowsPerPage: 0 })
 let disLoteFicha = ref([]);
 async function obtenerInfo() {
   try {
-    const r = await disLoteFichaStore.obtenerInfoDisLoteFicha();
+    const r = await disLoteFichaStore.obtenerInfodislote_depen();
+    console.log(r);
+    rows.value = r
     disLoteFicha.value = disLoteFichaStore.disLoteFicha;
-    rows.value = r.reverse()
     console.log(r);
   } catch (error) {
     console.log(error);
@@ -143,8 +145,8 @@ async function distriPresupuesto(){
 const columns = [
   { name: "presupuesto", label: "presupuesto", field: "presupuesto", sortable: true, align: "left" },
   { name: "presupuestoDisponible", label: "Presupuesto disponible", field: "presupuestoDisponible", sortable: true, align: "left" },
-  { name: "idFicha", label: "Id ficha", field: val=>val.id_ficha.nombre, sortable: true, align: "left" },
-  { name: "idFicha", label: "Id ficha", field: val=>val.id_ficha.nombre, sortable: true, align: "left" },
+  { name: "iddiscontratolote", label: "iddiscontratolote",  sortable: true, align: "left" },
+  { name: "iddisdependencia", label: "iddisdependencia",sortable: true, align: "left" },
   // { name: "id_item", label: " Nombre del item", field: val=>val.id_item.nombre, sortable: true, align: "left" },
   {
     name: "estado",
@@ -181,7 +183,7 @@ function validar() {
       error.value = "";
     }, 2200);
 
-  } else if (id_lote.value.toString().trim() == "") {
+  } else if (iddiscontratolote.value.toString().trim() == "") {
     mostrarData.value = false;
     mostrarError.value = true;
     error.value = "Ingrese el lote de la ficha por favor";
@@ -203,7 +205,7 @@ function validar() {
   if (
     !presupuesto.value &&
     !id_item.value&&
-    !id_lote.value
+    !iddiscontratolote.value
   ) {
     badMessage.value = "Por favor rellene los campos";
     showBad();
@@ -217,10 +219,10 @@ async function editaragregarFicha() {
   validar();
   if (validacion.value === true) {
     if (cambio.value === 0) {
-      if (id_lote.value.trim() === '') {
+      if (iddiscontratolote.value.trim() === '') {
         mostrarData.value = false;
         mostrarError.value = true;
-        error.value = "Por favor digite un id_lote";
+        error.value = "Por favor digite un iddiscontratolote";
         setTimeout(() => {
           mostrarData.value = true;
           mostrarError.value = false;
@@ -232,7 +234,7 @@ async function editaragregarFicha() {
         showDefault();
         await distriPresupuestoStore.postFicha({
          presupuesto : presupuesto.value,
-         id_lote : id_lote.value,
+         iddiscontratolote : iddiscontratolote.value,
          id_item : id_item.value,
     
         });
@@ -268,7 +270,7 @@ async function editaragregarFicha() {
           showDefault();
           await distriPresupuestoStore.putEditarFicha(id, {
             presupuesto : presupuesto.value,
-         id_lote : id_lote.value,
+         iddiscontratolote : iddiscontratolote.value,
          id_item : id_item.value,
           });
           if (notification) {
@@ -302,7 +304,7 @@ async function editaragregarFicha() {
 
 function limpiar() {
  presupuesto.value= " ";
- id_lote.value=  " ";
+ iddiscontratolote.value=  " ";
  id_item.value = " ";
 }
 
@@ -333,7 +335,7 @@ onMounted(async () => {
 let idFicha = ref("")
 function editarFicha(data) {
   fixed.value = true;
-  id_lote.value = data.id_lote
+  iddiscontratolote.value = data.iddiscontratolote
   presupuesto.value = data.presupuesto
   id_item.value = data.id_item
   cambio.value = 1;
