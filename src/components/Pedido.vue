@@ -109,7 +109,6 @@ const PedidoStore = usePedidoStore();
 const $q = useQuasar();
 let error = ref("Ingrese todos los datos para la creacion de un vendedor");
 let text = ref("");
-let rutas = ref([]);
 let rows = ref([]);
 let fixed = ref(false);
 let fechacreacion = ref("");
@@ -124,6 +123,7 @@ let pedidos = ref([]);
 async function obtenerInfo() {
   try {
     await PedidoStore.obtenerpedido();
+    console.log(PedidoStore.pedidos);
     pedidos.value = PedidoStore.pedidos;
     rows.value = PedidoStore.pedidos;
     // console.log(rows.value);
