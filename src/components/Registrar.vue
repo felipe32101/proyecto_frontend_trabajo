@@ -49,11 +49,11 @@
         </label>
       </div>
       <div class="bot">
-      <button class="button2">
         <router-link to="/Usuario">
-          <span class="lable">Cancelar</span>
-            </router-link>
+      <button class="button2">
+        <span class="lable">Cancelar</span>
       </button>
+      </router-link>
       <button type="submit" class="submit">Registrar</button>
     </div><br>
     </form>

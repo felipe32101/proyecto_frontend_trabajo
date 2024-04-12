@@ -19,8 +19,10 @@ export const useFichaStore = defineStore('ficha', () => {
         try {
             console.log('d', data);
             let res = await axios.post('ficha/guardar', data);
+            console.log(res);
             return res
         } catch (error) {
+            console.log(error);
             return error.response.data
         }
     }
