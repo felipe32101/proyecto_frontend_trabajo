@@ -145,7 +145,13 @@ async function distriPresupuesto(){
 const columns = [
   { name: "presupuesto", label: "presupuesto", field: "presupuesto", sortable: true, align: "left" },
   { name: "presupuestoDisponible", label: "Presupuesto disponible", field: "presupuestoDisponible", sortable: true, align: "left" },
-  { name: "iddiscontratolote", label: "iddiscontratolote",  sortable: true, align: "left" },
+  { name: "iddiscontratolote", label: "iddiscontratolote", 
+  
+  
+  
+  
+  
+  sortable: true, align: "left" },
   { name: "iddisdependencia", label: "iddisdependencia",sortable: true, align: "left" },
   // { name: "id_item", label: " Nombre del item", field: val=>val.id_item.nombre, sortable: true, align: "left" },
   {

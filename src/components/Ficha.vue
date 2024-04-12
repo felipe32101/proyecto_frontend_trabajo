@@ -14,7 +14,7 @@
           </q-card-section>
           <q-separator />
           <div v-if="mostrarData">
-            <q-card-section style="max-height: 50vh" class="scroll">
+            <q-card-section style="max-height: 100vh" class="scroll">
               <q-input v-model="codigo_ficha" label="Codigo" type="number" style="width: 300px" />
               <q-input v-model="nombre" label="Nombre" type="string" style="width: 300px" />
               <q-select v-model="nivel_de_formacion" :options="options" label="Nivel de formacion" style="width: 300px" />
@@ -37,7 +37,7 @@
         </div>
       </q-card>
     </q-dialog>
-    <div style="width: 1000px; ">
+    <div style="width: 100vh; ">
       <div class="btn-agregar" style="">
         <q-btn  label="Agregar Ficha" @click="agregarFicha()" style=" background-color: #2e7d32 !important;"/>
       </div>
@@ -45,7 +45,7 @@
 
         <q-table class="my-sticky-virtscroll-table" virtual-scroll flat bordered v-model:pagination="pagination"
           :rows-per-page-options="[0]" :virtual-scroll-sticky-size-start="48" row-key="index" :rows="rows"
-          :columns="columns" style="height: 600px;">
+          :columns="columns">
           <template v-slot:body-cell-estado="props">
             <q-td :props="props">
               <label for="" v-if="props.row.estado == 1" style="color: green">Activo</label>
@@ -102,18 +102,18 @@ async function obtenerInfo() {
 
 
 const columns = [
-  { name: "codigo_ficha", label: "codigo ficha", field: "codigo_ficha", sortable: true, align: "left" },
-  { name: "nombre", label: "Nombre", field: "nombre", sortable: true, align: "left" },
-  { name: "nivel_de_formacion", label: "Nivel", field: "nivel_de_formacion", sortable: true, align: "left" },
-  { name: "fecha_inicio", label: "fecha inicio", field: "fecha_inicio", format: (val) => format(new Date(val), "yyyy-MM-dd"), sortable: true, align: "left" },
-  { name: "ficha_fin", label: "ficha fin", field: "ficha_fin", format: (val) => format(new Date(val), "yyyy-MM-dd"), sortable: true, align: "left" },
+  { name: "codigo_ficha", label: "codigo ficha", field: "codigo_ficha", sortable: true, align: "center" },
+  { name: "nombre", label: "Nombre", field: "nombre", sortable: true, align: "center" },
+  { name: "nivel_de_formacion", label: "Nivel", field: "nivel_de_formacion", sortable: true, align: "center" },
+  { name: "fecha_inicio", label: "fecha inicio", field: "fecha_inicio", format: (val) => format(new Date(val), "yyyy-MM-dd"), sortable: true, align: "center" },
+  { name: "ficha_fin", label: "ficha fin", field: "ficha_fin", format: (val) => format(new Date(val), "yyyy-MM-dd"), sortable: true, align: "center" },
 
   {
     name: "estado",
     label: "Estado",
     field: "estado",
     sortable: true,
-    align: "left",
+    align: "center",
     format: (val) => (val ? "Activo" : "Inactivo"),
   },
   {

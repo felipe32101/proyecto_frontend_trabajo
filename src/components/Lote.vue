@@ -41,7 +41,7 @@
         </div>
       </q-card>
     </q-dialog>
-    <div style="width: 1000px">
+    <div style="width: 100vh">
       <div class="btn-agregar">
         <q-btn
           class="bg-secondary"
@@ -61,7 +61,6 @@
           row-key="index"
           :rows="rows"
           :columns="columns"
-          style="height: 600px"
         >
           <template v-slot:body-cell-estado="props">
             <q-td :props="props">
@@ -139,7 +138,7 @@ const columns = [
     label: "Nombre",
     field: "nombre",
     sortable: true,
-    align: "left",
+    align: "center",
   },
 
   {
@@ -147,7 +146,7 @@ const columns = [
     label: "codigo",
     field: "codigo",
     sortable: true,
-    align: "left",
+    align: "center",
   },
 
   {
@@ -155,7 +154,7 @@ const columns = [
     label: "Estado",
     field: "estado",
     sortable: true,
-    align: "left",
+    align: "center",
     format: (val) => (val ? "Activo" : "Inactivo"),
   },
   {

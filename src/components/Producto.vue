@@ -37,14 +37,14 @@
         </div>
       </q-card>
     </q-dialog>
-    <div style="width: 55vw;">
+    <div style="width: 60vw;">
       <div class="btn-agregar">
         <q-btn class="bg-secondary" label="Agregar Producto" @click="agregarProducto()" style=" background-color: #2e7d32 !important;"/>
       </div>
       <div class="q-pa-md">
         <q-table class="my-sticky-virtscroll-table" virtual-scroll flat bordered v-model:pagination="pagination"
           :rows-per-page-options="[0]" :virtual-scroll-sticky-size-start="48" row-key="index" :rows="rows"
-          :columns="columns" style="height: 600px;">
+          :columns="columns">
           <template v-slot:body-cell-estado="props">
             <q-td :props="props">
               <label for="" v-if="props.row.estado == 1" style="color: green">Activo</label>
@@ -111,19 +111,19 @@ function formatCurrency(amount) {
 
 
 const columns = [
-  { name: "nombre", label: "Nombre", field: "nombre", sortable: true, align: "left" },
-  { name: "codigo", label: "Codigo", field: "codigo", sortable: true, align: "left" },
-  { name: "descripcion", label: "Descripcion", field: "descripcion", sortable: true, align: "left" },
-  { name: "unidadMedida", label: "Unidad de Medida", field: "unidadMedida", sortable: true, align: "left" },
-  { name: "precioUnitario", label: "Precio Unitario", field: "precioUnitario", sortable: true, align: "left",  format: (val) => formatCurrency(val) },
-  { name: "iva", label: "IVA", field: "iva", sortable: true, align: "left",  format: (val) => formatCurrency(val) },
-  { name: "consumible", label: "Consumible", field: "consumible", sortable: true, align: "left" },
+  { name: "nombre", label: "Nombre", field: "nombre", sortable: true, align: "center" },
+  { name: "codigo", label: "Codigo", field: "codigo", sortable: true, align: "center" },
+  { name: "descripcion", label: "Descripcion", field: "descripcion", sortable: true, align: "center" },
+  { name: "unidadMedida", label: "Unidad de Medida", field: "unidadMedida", sortable: true, align: "center" },
+  { name: "precioUnitario", label: "Precio Unitario", field: "precioUnitario", sortable: true, align: "center",  format: (val) => formatCurrency(val) },
+  { name: "iva", label: "IVA", field: "iva", sortable: true, align: "center",  format: (val) => formatCurrency(val) },
+  { name: "consumible", label: "Consumible", field: "consumible", sortable: true, align: "center" },
   {
     name: "estado",
     label: "Estado",
     field: "estado",
     sortable: true,
-    align: "left",
+    align: "center",
     format: (val) => (val ? "Activo" : "Inactivo"),
   },
   {
