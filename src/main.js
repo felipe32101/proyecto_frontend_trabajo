@@ -33,6 +33,6 @@ app.use(router)
 
 // axios.defaults.baseURL ="https://warespace001.azurewebsites.net"
 
-axios.defaults.baseURL ="https://backend-abxx.onrender.com/"
-// axios.defaults.baseURL = 'http://localhost:5000/'
+// axios.defaults.baseURL ="https://backend-abxx.onrender.com/"
+axios.defaults.baseURL = 'http://localhost:5000/'
 app.mount('#app')

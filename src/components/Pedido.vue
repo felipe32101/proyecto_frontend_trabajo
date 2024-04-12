@@ -153,8 +153,8 @@ const columns = [
     align: "left",
   },
   {
-    name: "idficha",
-    label: "Codigo Ficha",
+    name: "codigo",
+    label: "Codigo ",
     field: (val) => val.idficha.codigo_ficha,
     sortable: true,
     align: "left",
