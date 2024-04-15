@@ -1,7 +1,7 @@
 <template>
     <div>
       <div>
-        <h1 style="text-align: center; margin-top: 50px">Lotes</h1>
+        <h1 style="text-align: center; margin-top: 50px">Dependencias</h1>
         <hr />
       </div>
       <!-- Modal -->
@@ -36,7 +36,7 @@
   
             <q-card-actions align="center" style="gap: 30px; margin-top: 10px">
               <button class="btn" v-close-popup>Cancelar</button>
-              <button @click="editarAgregarLote()" class="btn">Aceptar</button>
+              <button @click="editarAgregarDepen()" class="btn">Aceptar</button>
             </q-card-actions>
           </div>
         </q-card>
@@ -45,8 +45,8 @@
         <div class="btn-agregar">
           <q-btn
             class="bg-secondary"
-            label="Agregar Lote"
-            @click="agregarLote()" style=" background-color: #2e7d32 !important;"
+            label="Agregar Dependencia"
+            @click="agregarDepen()" style=" background-color: #2e7d32 !important;"
           />
         </div>
         <div class="q-pa-md">
@@ -76,7 +76,7 @@
                   color="white"
                   text-color="black"
                   label="🖋️"
-                  @click="editarLote(props.row)"
+                  @click="editarDepne(props.row)"
                 />
                 <q-btn
                   glossy
@@ -105,9 +105,9 @@
   import axios from "axios";
   import { ref, onMounted } from "vue";
   import { format } from "date-fns";
-  import { useLoteStore } from "../stores/lote.js";
+  import { useDepenStore } from "../stores/dependencia.js";
   import { useQuasar } from "quasar";
-  const loteStore = useLoteStore();
+  const dependenciaStore = useDepenStore();
   const $q = useQuasar();
   let error = ref("Ingrese todos los datos para la creacion de un vendedor");
   let text = ref("");
@@ -120,12 +120,13 @@
   let mostrarError = ref(false);
   let mostrarData = ref(true);
   let pagination = ref({ rowsPerPage: 0 });
-  let lotes = ref([]);
+  let dependencia = ref([]);
   async function obtenerInfo() {
     try {
-      await loteStore.obtenerInfoLotes();
-      lotes.value = loteStore.lotes;
-      rows.value = loteStore.lotes.reverse();
+      let response = await dependenciaStore.obtenerInfoDepen();
+      console.log(response);
+      dependencia.value = response;
+      rows.value = response.reverse();
       console.log(rows.value);
     } catch (error) {
       console.log(error);
@@ -174,7 +175,7 @@
     });
   };
   
-  function agregarLote() {
+  function agregarDepen() {
     fixed.value = true;
     text.value = "Agregar Lote";
     cambio.value = 0;
@@ -203,7 +204,7 @@
       validacion.value = true;
     }
   }
-  async function editarAgregarLote() {
+  async function editarAgregarDepen() {
     validar();
     if (validacion.value === true) {
       if (cambio.value === 0) {
@@ -220,7 +221,7 @@
         }
         try {
           showDefault();
-          const respuestas = await loteStore.postLote({
+          const respuestas = await dependenciaStore.postDepen({
             nombre: nombre.value,
             codigo: codigo.value,
           });
@@ -264,7 +265,7 @@
         if (id) {
           try {
             showDefault();
-            const respuesta =await loteStore.putEditarLote(id, {
+            const respuesta =await dependenciaStore.putEditarDepen(id, {
               _id: idLote.value,
               nombre: nombre.value,
               codigo: codigo.value,
@@ -309,7 +310,7 @@
     }
   }
   let idLote = ref("");
-  function editarLote(data) {
+  function editarDepne(data) {
     idLote.value = String(data._id);
     fixed.value = true;
     nombre.value = data.nombre;
@@ -335,7 +336,7 @@
   async function inactivarLote(id) {
     try {
       showDefault();
-      await loteStore.putInactivarLote(id);
+      await dependenciaStore.putInactivarDepen(id);
       if (notification) {
         notification();
       }
@@ -362,7 +363,7 @@
   async function activarLote(id) {
     try {
       showDefault();
-      await loteStore.putActivarLote(id);
+      await dependenciaStore.putActivarDepen(id);
       if (notification) {
         notification();
       }
