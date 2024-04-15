@@ -75,12 +75,11 @@ import { ref, onMounted } from "vue";
 import { format } from "date-fns";
 import { useDistriLoteFicha } from "../stores/distriLoteFicha.js";
 import { useQuasar } from "quasar";
-import {useFichaStore} from "../stores/ficha.js";
-// import {useLoteStore} from "../stores/lote.js";
-import { useLoteStore } from "../stores/lote.js";
+import { useDependencia} from "../stores/dependencia.js";
 import { usedistriPresupuesto } from "../stores/distriPresupuesto";
 const disLoteFichaStore = useDistriLoteFicha();
 const distriPresupuestoStore = usedistriPresupuesto()
+const dependenciaStore = usedistriPresupuesto
 const $q = useQuasar();
 let error = ref("Ingrese todos los datos para la creacion de un vendedor");
 let text = ref("");
@@ -111,7 +110,21 @@ async function obtenerInfo() {
 
 
 
-async function obtenercontrato() {
+async function optenerdependencia() {
+  try {
+    const response = await distriPresupuestoStore.obtenerInfoDependencia();
+    optionscontrato.value = response.disDependencia.map((disDependencia) => ({
+      label: `${disDependencia.nombre} `,
+      value: String(disDependencia._id),
+    }));
+    console.log(optionscontrato.value);
+  } catch (error) {
+    console.log(error);
+  }
+}
+optenerdependencia();
+
+async function distriPresupuesto() {
   try {
     const response = await distriPresupuestoStore.obtenerInfodislote_depen();
     optionscontrato.value = response.disdependencia.map((disdependencia) => ({
@@ -119,28 +132,6 @@ async function obtenercontrato() {
       value: String(disdependencia._id),
     }));
     console.log(optionscontrato.value);
-  } catch (error) {
-    console.log(error);
-  }
-}
-obtenercontrato();
-
-async function distriPresupuesto() {
-  try {
-    const responsePresupuesto = await useUsuario.obtenerusuario();
-    console.log(responsePresupuesto);
-
-    const Usuarios = responsePresupuesto.filter(disdependencia=>disdependencia.estado==true)
-
-    OpcionesUsuario.value = Usuarios.map((usuario) => {
-      return {
-        label:
-          usuario.usuario +
-          " / " + usuario.nombre,
-        value: usuario._id,
-      };
-    });
-    
   } catch (error) {
     console.log(error);
   }
