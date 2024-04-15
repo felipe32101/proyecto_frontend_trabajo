@@ -126,7 +126,7 @@
       let response = await dependenciaStore.obtenerInfoDepen();
       console.log(response);
       dependencia.value = response;
-      rows.value = response.reverse();
+      rows.value = response;
       console.log(rows.value);
     } catch (error) {
       console.log(error);

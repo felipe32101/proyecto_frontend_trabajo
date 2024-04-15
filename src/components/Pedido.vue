@@ -69,10 +69,6 @@
             <q-td :props="props" class="botones">
               <q-btn glossy label="❌" @click="inactivarPedido(props.row._id)" v-if="props.row.estado == 1" />
               <q-btn glossy label="✔️" @click="activarPedido(props.row._id)" v-else />
-              <router-link to="/detallepedido.vue">
-                <q-btn color="white" text-color="black" label="Detalle pedido" />
-              </router-link>
-
             </q-td>
           </template>
         </q-table>
