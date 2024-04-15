@@ -77,23 +77,24 @@ const cedulaUser = useUsuario.usuario.cedula
 const correoUser = useUsuario.usuario.correo
 const telefonoUser = useUsuario.usuario.telefono
 const rolUser = useUsuario.usuario.rol
+const idUsuario = String(useUsuario.usuario._id)
 
 let editUsername = ref(username)
 let editNombre = ref(nombreUser)
 let editCedula = ref(cedulaUser)
 let editCorreo = ref(correoUser)
 let editTelefono = ref(telefonoUser)
-
+let editIdUsuario = String(idUsuario)
 async function saveChanges() {
-  let id = idUsuario.value;
   try {
-    const response = await useUsuario.put(id, {
-      username: editUsername.value,
+    const response = await useUsuario.putEditarUsuario(idUsuario, {
+      usuario: editUsername.value,
       nombre: editNombre.value,
       cedula: editCedula.value,
       correo: editCorreo.value,
       telefono: editTelefono.value,
     });
+    console.log(response);
 
     // Si la actualización fue exitosa, cambia al modo de visualización
     editMode.value = false;
