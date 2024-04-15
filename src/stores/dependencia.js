@@ -10,7 +10,7 @@ export const useDepenStore = defineStore('dependencia', () => {
             const responseDepen = await axios.get('dependencia/dependencia');
             console.log(responseDepen.data.depen);
             Dependencias.value = responseDepen.data;
-            return responseDepen.data.depen
+            return responseDepen.data
         } catch (error) {
             throw error
         }
