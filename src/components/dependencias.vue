@@ -177,7 +177,7 @@
   
   function agregarDepen() {
     fixed.value = true;
-    text.value = "Agregar Lote";
+    text.value = "Agregar Dependencia";
     cambio.value = 0;
     limpiar();
   }
@@ -185,7 +185,7 @@
     if (nombre.value.trim() == "") {
       mostrarData.value = false;
       mostrarError.value = true;
-      error.value = "Digite el nombre del Lote por favor";
+      error.value = "Digite el nombre de la dependencia por favor";
       setTimeout(() => {
         mostrarData.value = true;
         mostrarError.value = false;
@@ -194,7 +194,7 @@
     } else if (codigo.value.toString().trim() == "") {
       mostrarData.value = false;
       mostrarError.value = true;
-      error.value = "Digite el codigo del Lote por favor";
+      error.value = "Digite el codigo de la dependencia por favor";
       setTimeout(() => {
         mostrarData.value = true;
         mostrarError.value = false;
@@ -242,7 +242,7 @@
           limpiar();
           $q.notify({
             spinner: false,
-            message: "Lote Agregado",
+            message: "Dependencia Agregada",
             timeout: 2000,
             type: "positive",
           });
@@ -285,7 +285,7 @@
             limpiar();
             $q.notify({
               spinner: false,
-              message: "Lote Actualizado",
+              message: "Dependencia Actualizada",
               timeout: 2000,
               type: "positive",
             });
@@ -342,7 +342,7 @@
       }
       $q.notify({
         spinner: false,
-        message: "Lote Inactivo",
+        message: "Dependencia Inactiva",
         timeout: 2000,
         type: "positive",
       });
@@ -369,7 +369,7 @@
       }
       $q.notify({
         spinner: false,
-        message: "Lote Activo",
+        message: "Dependencia Activa",
         timeout: 2000,
         type: "positive",
       });
