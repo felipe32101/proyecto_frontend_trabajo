@@ -63,6 +63,7 @@
 </template>
 
 <script setup>
+import axios from 'axios';
 import { useUsuarioStore } from '../stores/usuario.js'
 import { ref } from "vue";
 
@@ -84,17 +85,16 @@ let editCorreo = ref(correoUser)
 let editTelefono = ref(telefonoUser)
 
 async function saveChanges() {
+  let id = idUsuario.value;
   try {
-    // Llama a una función que envía los datos editados al servidor
-    await useUsuario.putEditarUsuario({
+    const response = await useUsuario.put(id, {
       username: editUsername.value,
       nombre: editNombre.value,
       cedula: editCedula.value,
       correo: editCorreo.value,
       telefono: editTelefono.value,
-      // Agrega los otros campos aquí
     });
-    
+
     // Si la actualización fue exitosa, cambia al modo de visualización
     editMode.value = false;
   } catch (error) {
@@ -104,15 +104,12 @@ async function saveChanges() {
 }
 
 function handleEdit() {
+  editMode.value = true;
   if (editMode.value) {
     saveChanges();
-    editMode.value = !editMode.value;
-  } else {
-    editMode.value = !editMode.value;
   }
 }
 </script>
-
 <style scoped>
 .container {
   display: flex;

@@ -75,7 +75,7 @@ import { ref, onMounted } from "vue";
 import { format } from "date-fns";
 import { useDistriLoteFicha } from "../stores/distriLoteFicha.js";
 import { useQuasar } from "quasar";
-import { useDependencia} from "../stores/dependencia.js";
+// import { useDependencia} from "../stores/dependencia.js";
 import { usedistriPresupuesto } from "../stores/distriPresupuesto";
 const disLoteFichaStore = useDistriLoteFicha();
 const distriPresupuestoStore = usedistriPresupuesto()
