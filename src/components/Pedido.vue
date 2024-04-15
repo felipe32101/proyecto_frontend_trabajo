@@ -124,7 +124,7 @@ async function obtenerInfo() {
   try {
     await PedidoStore.obtenerpedido();
     pedidos.value = PedidoStore.pedidos;
-    rows.value = PedidoStore.pedidos;
+    rows.value = PedidoStore.pedidos.reverse();
     console.log(PedidoStore.pedidos);
   } catch (error) {
     console.log(error);

@@ -148,7 +148,7 @@ const columns = [
   { name: "presupuesto", label: "Presupuesto", field: "presupuesto", sortable: true, align: "left", format: (val) => formatCurrency(val) },
   { name: "presupuestoDisponible", label: "Presupuesto disponible", field: "presupuestoDisponible", sortable: true, align: "left", format: (val) => formatCurrency(val) },
   { name: "id_lote", label: "Nombre del lote", field: val => val.id_lote.nombre, sortable: true, align: "left" },
-  { name: "id_contrato", label: " Nombre del item", field: val => val.id_contrato.nombre, sortable: true, align: "left" },
+  { name: "id_contrato", label: " Nombre del contrato", field: val => val.id_contrato.nombre, sortable: true, align: "left" },
   {
     name: "estado",
     label: "Estado",

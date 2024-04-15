@@ -8,7 +8,8 @@ export const usedistriPresupuesto = defineStore('Dislote_contrato', () => {
     const obtenerInfoDislote_contrato = async () => {
         try {
             let responsedistripresupuesto = await axios.get(`dislote_contrato/dislote_contrato`);
-            console.log(responsedistripresupuesto.data);
+            // console.log(responsedistripresupuesto.data);
+            // console.log('esto es distripresu',responsedistripresupuesto);
             disdependencia.value = responsedistripresupuesto.data;
             return responsedistripresupuesto.data
         } catch (error) {
