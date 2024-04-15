@@ -8,10 +8,7 @@
     <q-dialog v-model="fixed">
       <q-card class="modal-content">
         <div class="contorno">
-          <q-card-section
-            class="row items-center q-pb-none"
-            style="color: black"
-          >
+          <q-card-section class="row items-center q-pb-none" style="color: black">
             <div class="text-h6">{{ text }}</div>
             <q-space />
           </q-card-section>
@@ -19,21 +16,24 @@
           <div v-if="mostrarData">
             <q-card-section style="max-height: 50vh" class="scroll">
               <q-input filled v-model="fechaentrega" label="Fecha" mask="date" :rules="['date']">
-      <template v-slot:append>
-        <q-icon name="event" class="cursor-pointer">
-          <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-            <q-date v-model="fechaentrega">
-              <div class="row items-center justify-end">
-                <q-btn v-close-popup label="Close" color="primary" flat />
-              </div>
-            </q-date>
-          </q-popup-proxy>
-        </q-icon>
-      </template>
-    </q-input>
-              <q-select filled v-model="codigo_ficha" :options="OpcionesFicha" label="Id Ficha" emit-value map-options style="min-width: 250px; max-width: 300px"/><br>
-              <q-select filled v-model="idInstructorEncargado" :options="OpcionesUsuario" label="Encargado" emit-value map-options style="min-width: 250px; max-width: 300px"/><br>
-              <q-input filled type="number" v-model="total" label="Total" emit-value map-options style="min-width: 250px; max-width: 350px"/>
+                <template v-slot:append>
+                  <q-icon name="event" class="cursor-pointer">
+                    <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                      <q-date v-model="fechaentrega">
+                        <div class="row items-center justify-end">
+                          <q-btn v-close-popup label="Close" color="primary" flat />
+                        </div>
+                      </q-date>
+                    </q-popup-proxy>
+                  </q-icon>
+                </template>
+              </q-input>
+              <q-select filled v-model="codigo_ficha" :options="OpcionesFicha" label="Id Ficha" emit-value map-options
+                style="min-width: 250px; max-width: 300px" /><br>
+              <q-select filled v-model="idInstructorEncargado" :options="OpcionesUsuario" label="Encargado" emit-value
+                map-options style="min-width: 250px; max-width: 300px" /><br>
+              <q-input filled type="number" v-model="total" label="Total" emit-value map-options
+                style="min-width: 250px; max-width: 350px" />
             </q-card-section>
           </div>
 
@@ -41,7 +41,7 @@
             <h4>{{ error }}</h4>
           </div>
 
-          <q-separator/>
+          <q-separator />
 
           <q-card-actions align="center" style="gap: 30px; margin-top: 10px">
             <button class="btn" v-close-popup>Cancelar</button>
@@ -52,31 +52,16 @@
     </q-dialog>
     <div style="width: 1000px">
       <div class="btn-agregar">
-        <q-btn
-          class="bg-secondary"
-          label="Agregar Pedido"
-          @click="agregarPedido()" style=" background-color: #2e7d32 !important;"
-        />
+        <q-btn class="bg-secondary" label="Agregar Pedido" @click="agregarPedido()"
+          style=" background-color: #2e7d32 !important;" />
       </div>
       <div class="q-pa-md">
-        <q-table
-          class="my-sticky-virtscroll-table"
-          virtual-scroll
-          flat
-          bordered
-          v-model:pagination="pagination"
-          :rows-per-page-options="[0]"
-          :virtual-scroll-sticky-size-start="48"
-          row-key="index"
-          :rows="rows"
-          :columns="columns"
-          style="height: 600px"
-        >
-        <template v-slot:body-cell-estado="props">
+        <q-table class="my-sticky-virtscroll-table" virtual-scroll flat bordered v-model:pagination="pagination"
+          :rows-per-page-options="[0]" :virtual-scroll-sticky-size-start="48" row-key="index" :rows="rows"
+          :columns="columns" style="height: 600px">
+          <template v-slot:body-cell-estado="props">
             <q-td :props="props">
-              <label for="" v-if="props.row.estado == 1" style="color: green"
-                >Activo</label
-              >
+              <label for="" v-if="props.row.estado == 1" style="color: green">Activo</label>
               <label for="" v-else style="color: red">Inactivo</label>
             </q-td>
           </template>
@@ -84,7 +69,9 @@
             <q-td :props="props" class="botones">
               <q-btn glossy label="❌" @click="inactivarPedido(props.row._id)" v-if="props.row.estado == 1" />
               <q-btn glossy label="✔️" @click="activarPedido(props.row._id)" v-else />
-              <q-btn glossy label="Detalle pedido" />
+              <router-link to="/detallepedido.vue">
+                <q-btn color="white" text-color="black" label="Detalle pedido" />
+              </router-link>
 
             </q-td>
           </template>
@@ -96,13 +83,13 @@
     </div>
   </div>
 </template>
-  
-  <script setup>
+
+<script setup>
 import axios from "axios";
 import { ref, onMounted } from "vue";
 import { format } from "date-fns";
 import { usePedidoStore } from "../stores/pedido.js";
-import { useFichaStore} from "../stores/ficha.js"
+import { useFichaStore } from "../stores/ficha.js"
 import { useUsuarioStore } from "../stores/usuario.js"
 import { useQuasar } from "quasar";
 const PedidoStore = usePedidoStore();
@@ -161,12 +148,12 @@ const columns = [
   {
     name: "idInstructorEncargado",
     label: "Encargado",
-    field: (val)=> val.idInstructorEncargado.nombre,
+    field: (val) => val.idInstructorEncargado.nombre,
     sortable: true,
     align: "left",
   },
 
-  
+
   {
     name: "total",
     label: "total",
@@ -283,10 +270,10 @@ async function editarAgregarPedio() {
         try {
           showDefault();
           await PedidoStore.putEditarpedido(id, {
-          fechaentrega: fechaentrega.value,
-          codigo_ficha: codigo_ficha.value,
-          idInstructorEncargado: idInstructorEncargado.value,
-          total: total.value,
+            fechaentrega: fechaentrega.value,
+            codigo_ficha: codigo_ficha.value,
+            idInstructorEncargado: idInstructorEncargado.value,
+            total: total.value,
           });
           if (notification) {
             notification();
@@ -412,7 +399,7 @@ async function obtenerOptions() {
     const responseFichas = await useFicha.obtenerInfoFichas();
     console.log(responseFichas);
 
-    const fichas = responseFichas.filter(ficha=>ficha.estado==true)
+    const fichas = responseFichas.filter(ficha => ficha.estado == true)
 
     OpcionesFicha.value = fichas.map((ficha) => {
       return {
@@ -436,7 +423,7 @@ async function obtenerOptionsotro() {
     const responseUsuario = await useUsuario.obtenerusuario();
     console.log(responseUsuario);
 
-    const Usuarios = responseUsuario.filter(usuario=>usuario.estado==true)
+    const Usuarios = responseUsuario.filter(usuario => usuario.estado == true)
 
     OpcionesUsuario.value = Usuarios.map((usuario) => {
       return {
@@ -446,7 +433,7 @@ async function obtenerOptionsotro() {
         value: usuario._id,
       };
     });
-    
+
   } catch (error) {
     console.log(error);
   }
@@ -458,8 +445,8 @@ onMounted(async () => {
   obtenerInfo();
 });
 </script>
-  
-  <style scoped>
+
+<style scoped>
 .modal-content {
   width: 480px;
   height: 500px;
@@ -606,6 +593,5 @@ h1 {
   background: #2e7d3281;
 }
 </style>
-  <style lang="sass">
+<style lang="sass">
 </style>
-  
