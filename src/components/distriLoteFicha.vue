@@ -75,11 +75,11 @@ import { ref, onMounted } from "vue";
 import { format } from "date-fns";
 import { useDistriLoteFicha } from "../stores/distriLoteFicha.js";
 import { useQuasar } from "quasar";
-// import { useDependencia} from "../stores/dependencia.js";
+import { useDepenStore } from "../stores/dependencia.js";
 import { usedistriPresupuesto } from "../stores/distriPresupuesto";
 const disLoteFichaStore = useDistriLoteFicha();
 const distriPresupuestoStore = usedistriPresupuesto()
-const dependenciaStore = usedistriPresupuesto
+const dependenciaStore = useDepenStore();
 const $q = useQuasar();
 let error = ref("Ingrese todos los datos para la creacion de un vendedor");
 let text = ref("");
@@ -112,10 +112,10 @@ async function obtenerInfo() {
 
 async function optenerdependencia() {
   try {
-    const response = await distriPresupuestoStore.obtenerInfoDependencia();
-    optionscontrato.value = response.disDependencia.map((disDependencia) => ({
-      label: `${disDependencia.nombre} `,
-      value: String(disDependencia._id),
+    const response = await dependenciaStore.obtenerInfoDepen();
+    optionscontrato.value = response.map((Dependencias) => ({
+      label: `${Dependencias.nombre} `,
+      value: String(Dependencias._id),
     }));
     console.log(optionscontrato.value);
   } catch (error) {
@@ -142,14 +142,8 @@ distriPresupuesto()
 const columns = [
   { name: "presupuesto", label: "presupuesto", field: "presupuesto", sortable: true, align: "left" },
   { name: "presupuestoDisponible", label: "Presupuesto disponible", field: "presupuestoDisponible", sortable: true, align: "left" },
-  { name: "iddiscontratolote", label: "iddiscontratolote", 
-  
-  
-  
-  
-  
-  sortable: true, align: "left" },
-  { name: "iddisdependencia", label: "iddisdependencia",sortable: true, align: "left" },
+  { name: "iddiscontratolote", label: "iddiscontratolote", sortable: true, align: "left",field: val=>val.presupuestoDisponible },
+  { name: "iddisdependencia", label: "iddisdependencia",sortable: true, align: "left", field: val=>val.presupuestoDisponible },
   // { name: "id_item", label: " Nombre del item", field: val=>val.id_item.nombre, sortable: true, align: "left" },
   {
     name: "estado",
@@ -533,6 +527,7 @@ async function activarFicha(id) {
 }
 
 .btn {
+  
   font-family: "Letra";
   width: 100px;
   font-size: 18px;
