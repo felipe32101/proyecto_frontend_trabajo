@@ -16,6 +16,7 @@ import distriLoteFicha from "../components/distriLoteFicha.vue";
 import verificar from "../components/verificar.vue";
 import editPerfil from "../components/editPerfil.vue";
 import cambioContra from "../components/cambioContra.vue";
+import dependencias from "../components/dependencias.vue";
 import { useUsuarioStore } from "../stores/usuario.js";
 import { createRouter, createWebHashHistory } from "vue-router";
 const auth = (to, from, next) => {
@@ -58,7 +59,7 @@ const routes = [
       {path: "/itemPresupuesto", component: itemPresupuesto, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]}},
       {path: "/distriPresupuesto", component: distriPresupuesto, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]}},
       {path: "/distriLoteFicha", component: distriLoteFicha, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]}},
-      
+      {path: "/dependencias", component: dependencias, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]}},
     ]
   },
   { path: "/Registrar", component: Registrar, },

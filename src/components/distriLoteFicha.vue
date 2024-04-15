@@ -17,8 +17,8 @@
             <q-card-section style="max-height: 50vh" class="scroll">
               <q-input v-model="presupuesto" label="presupuesto" type="number" style="width: 300px" />
               <q-input v-model="presupuestoDisponible" label="presupuesto Disponible" type="number" style="width: 300px" />
-              <q-input v-model="iddiscontratolote" options="optionslote" label="id lote" type="string" style="width: 300px" />
-              <q-input v-model="iddisdependencia" options="optionsitem" label="id item" type="string" style="width: 300px" />
+              <q-select filled v-model="iddiscontratolote" :options="optionscontrato" label="id contrato" type="string" style="width: 300px" />
+              <q-select filled v-model="iddisdependencia" :options="optionsdependencia" label="id dependencia" type="string" style="width: 300px" />
 
 
             </q-card-section>
@@ -77,11 +77,10 @@ import { useDistriLoteFicha } from "../stores/distriLoteFicha.js";
 import { useQuasar } from "quasar";
 import {useFichaStore} from "../stores/ficha.js";
 // import {useLoteStore} from "../stores/lote.js";
+import { useLoteStore } from "../stores/lote.js";
 import { usedistriPresupuesto } from "../stores/distriPresupuesto";
 const disLoteFichaStore = useDistriLoteFicha();
 const distriPresupuestoStore = usedistriPresupuesto()
-// const loteStore = useLoteStore();
-const fichaStore = useFichaStore();
 const $q = useQuasar();
 let error = ref("Ingrese todos los datos para la creacion de un vendedor");
 let text = ref("");
@@ -92,8 +91,8 @@ let presupuesto = ref("");
 let iddisdependencia = ref("")
 // let idficha = ref("");
 let cambio = ref(0);
-let optionsitem = ref("");
-let optionslote = ref("");
+let optionsdependencia = ref("");
+let optionscontrato = ref("");
 let mostrarError = ref(false);
 let mostrarData = ref(true);
 let pagination = ref({ rowsPerPage: 0 })
@@ -112,35 +111,42 @@ async function obtenerInfo() {
 
 
 
-async function obtenerFicha(){
+async function obtenercontrato() {
   try {
-    await fichaStore.obtenerInfoFichas();
-    optionsitem.value = fichaStore.fichas.map((fichas) => ({
-      label: `${fichas.nombre} - ${fichas.id} `,
-      value: String(fichas._id),
+    const response = await distriPresupuestoStore.obtenerInfodislote_depen();
+    optionscontrato.value = response.disdependencia.map((disdependencia) => ({
+      label: `${disdependencia.nombre} `,
+      value: String(disdependencia._id),
     }));
-
-    console.log(optionsitem);
-  
+    console.log(optionscontrato.value);
   } catch (error) {
     console.log(error);
   }
 }
+obtenercontrato();
 
-async function distriPresupuesto(){
+async function distriPresupuesto() {
   try {
-    await distriPresupuestoStore.obtenerInfoDispresupuestos();
-    optionsitem.value = distriPresupuestoStore.Dispresupuestos.map(() => ({
-      label: `${fichas.nombre} - ${fichas.id} `,
-      value: String(fichas._id),
-    }));
+    const responsePresupuesto = await useUsuario.obtenerusuario();
+    console.log(responsePresupuesto);
 
-    console.log(optionsitem);
-  
+    const Usuarios = responsePresupuesto.filter(disdependencia=>disdependencia.estado==true)
+
+    OpcionesUsuario.value = Usuarios.map((usuario) => {
+      return {
+        label:
+          usuario.usuario +
+          " / " + usuario.nombre,
+        value: usuario._id,
+      };
+    });
+    
   } catch (error) {
     console.log(error);
   }
 }
+distriPresupuesto()
+
 
 const columns = [
   { name: "presupuesto", label: "presupuesto", field: "presupuesto", sortable: true, align: "left" },

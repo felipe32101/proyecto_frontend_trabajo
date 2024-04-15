@@ -12,10 +12,10 @@
           <q-fab icon="settings" direction="left" unelevated>
             <div id="estilos" style="display: flex; flex-direction: row; margin-right: 20vh" >
             <router-link to="/editPerfil">
-            <q-fab-action class="boton1" color="white" text-color="black" @click="onClick" label="Perfil" style="min-width: 100px; text-align: center;margin-right: 5px " />
+            <q-fab-action class="boton1" color="white" text-color="black" @click="onClick" label="Perfil" style="min-width: 100px; text-align: center;" />
             </router-link>
             <router-link to="/">
-            <q-fab-action class="boton1" color="white" text-color="black" @click="onClick" label="Salir" style="min-width: 100px; text-align: center;margin-right: 5px " />
+            <q-fab-action class="boton1" color="white" text-color="black" @click="onClick" label="Salir" style="min-width: 100px; text-align: center;" />
             </router-link>
           </div>
       </q-fab>
@@ -90,6 +90,7 @@ const links = [
   { text: "Ficha", icon: "description", path: "/Ficha" },
   { text: "Usuario", icon: "person", path: "/Usuario" },
   { text: "Lote", icon: "store", path: "/Lote" },
+  { text: "Dependencias", icon: "house", path: "/dependencias" },
   { text: "Pedido", icon: "shopping_cart", path: "/Pedido" },
   { text: "Producto", icon: "local_offer", path: "/Producto" },
   { text: "Contrato", icon: "attach_money", path: "/itemPresupuesto" },

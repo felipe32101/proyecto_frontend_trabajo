@@ -31,6 +31,17 @@ const recuperarcontraseña= async () => {
     }
   };
   
+  const putEditarUsuario = async (id, data) => {
+    try {
+        console.log(id, data);
+
+        let res = await axios.put(`usuario/usuario/${id}`, data);
+        return res
+    } catch (error) {
+        throw error;
+    }
+};
+
   // const verificarCodigo = async (codigo) => {
   //   try {
   //     let response = await axios.post(usuario/confirmarcodigo/${codigo});
@@ -142,7 +153,7 @@ const recuperarcontraseña= async () => {
   }
   return {
     usuarios, usuario, token, email,
-    obtenerusuario, postusuario, login,putusuarioActivar, putusuarioInactivar, sendemail, recuperarcontraseña,confirmarCodigo,nuevaPassword,
+    obtenerusuario, postusuario, login,putusuarioActivar, putusuarioInactivar, sendemail, recuperarcontraseña,confirmarCodigo,nuevaPassword, putEditarUsuario
   }
 }, {
   persist: true,

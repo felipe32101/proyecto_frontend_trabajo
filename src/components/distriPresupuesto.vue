@@ -57,7 +57,7 @@
               <q-btn glossy label="❌" @click="inactivarFicha(props.row._id)" v-if="props.row.estado == 1" />
               <q-btn glossy label="✔️" @click="activarFicha(props.row._id)" v-else />
               <router-link to="/distriLoteFicha">
-                <q-btn color="white" text-color="black" label="fichas" />
+                <q-btn color="white" text-color="black" label="Dependencias" />
               </router-link>
             </q-td>
           </template>
@@ -148,7 +148,7 @@ const columns = [
   { name: "presupuesto", label: "Presupuesto", field: "presupuesto", sortable: true, align: "left", format: (val) => formatCurrency(val) },
   { name: "presupuestoDisponible", label: "Presupuesto disponible", field: "presupuestoDisponible", sortable: true, align: "left", format: (val) => formatCurrency(val) },
   { name: "id_lote", label: "Nombre del lote", field: val => val.id_lote.nombre, sortable: true, align: "left" },
-  { name: "id_contrato", label: " Nombre del item", field: val => val.id_contrato.nombre, sortable: true, align: "left" },
+  { name: "id_contrato", label: " Nombre del contrato", field: val => val.id_contrato.nombre, sortable: true, align: "left" },
   {
     name: "estado",
     label: "Estado",
