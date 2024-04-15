@@ -36,6 +36,7 @@
             <img src="https://via.placeholder.com/150" />
           </q-avatar>
           <div class="text-h6">{{ username }}</div>
+          <div class="textito" style="font-size: 15px; color: green;">{{ rol }}</div>
           <div class="divider"></div>
 
           <div class="navigation">
@@ -106,11 +107,13 @@ const toggleSettingsDrawer = () => {
 
 const useUsuario = useUsuarioStore()
 const username = useUsuario.usuario.nombre
+const rol = useUsuario.usuario.rol
 
 onMounted(async () => {
   try {
     const response = await axios.get('/usuario/usuario');
     username.value = response.data.username;
+    rol.value = response.data.rol;
   } catch (error) {
     console.error("Error al obtener el nombre de usuario:", error);
   }
