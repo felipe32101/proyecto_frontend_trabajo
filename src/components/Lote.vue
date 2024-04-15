@@ -41,7 +41,7 @@
         </div>
       </q-card>
     </q-dialog>
-    <div style="width: 100vh">
+    <div style="width: 50vw">
       <div class="btn-agregar">
         <q-btn
           class="bg-secondary"

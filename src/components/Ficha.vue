@@ -37,7 +37,7 @@
         </div>
       </q-card>
     </q-dialog>
-    <div style="width: 100vh; ">
+    <div style="width: 60vw; ">
       <div class="btn-agregar" style="">
         <q-btn  label="Agregar Ficha" @click="agregarFicha()" style=" background-color: #2e7d32 !important;"/>
       </div>
@@ -93,7 +93,7 @@ async function obtenerInfo() {
   try {
     await FichaStore.obtenerInfoFichas();
     fichas.value = FichaStore.fichas;
-    rows.value = FichaStore.fichas;
+    rows.value = FichaStore.fichas.reverse();
     console.log(FichaStore.fichas);
   } catch (error) {
     console.log(error);
