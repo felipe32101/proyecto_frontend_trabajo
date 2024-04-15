@@ -58,7 +58,7 @@
       <div class="q-pa-md">
         <q-table class="my-sticky-virtscroll-table" virtual-scroll flat bordered v-model:pagination="pagination"
           :rows-per-page-options="[0]" :virtual-scroll-sticky-size-start="48" row-key="index" :rows="rows"
-          :columns="columns" style="height: 600px">
+          :columns="columns">
           <template v-slot:body-cell-estado="props">
             <q-td :props="props">
               <label for="" v-if="props.row.estado == 1" style="color: green">Activo</label>
