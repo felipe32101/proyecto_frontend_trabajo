@@ -4,7 +4,7 @@
       <h1 style="text-align: center; margin-top: 50px;">Usuarios</h1>
       <hr />
     </div>
-    <div style="width: 100vh;">
+    <div style="width: 55vw;">
       <div class="btn-agregar">
         <q-btn class="bg-secondary" label="Agregar usuario" @click="agregarUsuario()" style=" background-color: #2e7d32 !important;"/>
       </div> <br>

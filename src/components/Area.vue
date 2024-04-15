@@ -34,7 +34,7 @@
       </q-card>
     </q-dialog>
     <div>
-      <div style= "width: 100vh">
+      <div style= "width: 50vw;">
         <div class="btn-agregar-area">
           <q-btn
             class="btn-agregar"
@@ -117,7 +117,7 @@ async function obtenerInfo() {
   try {
     await AreaStore.obtenerInfoAreas();
     areas.value = AreaStore.areas;
-    rows.value = AreaStore.areas;
+    rows.value = AreaStore.areas.reverse();
   } catch (error) {
     console.log(error);
   }
@@ -201,6 +201,7 @@ async function editarAgregarArea() {
         });
         console.log("a");
         obtenerInfo();
+        fixed.value = false;
       } catch (error) {
         if (notification) {
           notification();
