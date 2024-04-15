@@ -90,6 +90,7 @@ const links = [
   { text: "Ficha", icon: "description", path: "/Ficha" },
   { text: "Usuario", icon: "person", path: "/Usuario" },
   { text: "Lote", icon: "store", path: "/Lote" },
+  { text: "Dependencias", icon: "house", path: "/dependencias" },
   { text: "Pedido", icon: "shopping_cart", path: "/Pedido" },
   { text: "Producto", icon: "local_offer", path: "/Producto" },
   { text: "Contrato", icon: "attach_money", path: "/itemPresupuesto" },
