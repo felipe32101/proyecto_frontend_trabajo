@@ -54,7 +54,7 @@ const routes = [
       {path: "/Ficha", component: Ficha, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]}},
       {path: "/Usuario", component: Usuario, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]} },
       {path: "/Lote", component: Lote, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]}},
-      {path: "/Pedido", component: Pedido, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]}},
+      {path: "/Pedido", component: Pedido, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin", "bodega", "instructor" ]}},
       {path: "/Producto", component: Producto, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]}},
       {path: "/itemPresupuesto", component: itemPresupuesto, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]}},
       {path: "/distriPresupuesto", component: distriPresupuesto, beforeEnter:auth, meta: {rol: ["administrador", "superAdmin" ]}},
